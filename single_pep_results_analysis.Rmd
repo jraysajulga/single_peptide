@@ -1,0 +1,323 @@
+---
+title: "Single Peptide Results Analysis"
+author: "Caleb Easterly"
+date: "August 7, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+## Introduction
+
+The single peptide analysis methods and results are contained in this document. 
+
+## Five peptide analysis
+
+The five peptides are as follows:
+
+```{r}
+fivepep <- c('AFLPGSLVDTRPVR',
+             'DIAMQIAAVNPTYLNREEVPTEVIEHEK',
+             'DLFKNPIHPYTK',
+             'DVTIEAVNSLYEK',
+             'EVPDWAAQLNENTNVKGLRIAVPK')
+```
+
+## Unipept
+
+### Process
+
+* Paste the tabular list of peptides into the Unipept ‘Metaproteomics Analysis’ web application (https://morty.ugent.be/mpa)  
+* Parameters:
+    - Equate I and L: FALSE
+    - Filter duplicate peptides: FALSE
+    - Advanced missed cleavage handling: TRUE
+* Download results
+* Annotate each peptide with only the GO terms that are present in 5% or more of the proteins (percentages are returned in GO term column)
+
+```{r}
+library(dplyr)
+library(stringr)
+cov_pat <- "\ \\(.{3,4}\\)"
+uni <- read.csv('unipept_20_peptides_result.csv',
+                stringsAsFactors = FALSE) %>%
+    select(peptide,
+           uni_go_bp = GO..biological.process.,
+           uni_go_mf = GO..molecular.function.,
+           uni_go_cc = GO..cellular.component.) %>%
+    filter(peptide %in% fivepep) %>%
+    mutate(uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
+           uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = ""),
+           uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = ""))
+
+```
+
+
+## eggNOG mapper
+
+* Use the Galaxy version of eggNOG mapper, on Galaxy-P
+* Parameters:
+    - Annotation type: DIAMOND
+    - Scoring matrix and gap costs: PAM30, 9 and 1
+    - Taxonomic Scope: Bacteria
+    - Orthologs: use all orthologs
+    - Gene Ontology evidence: use non-electronic terms
+    - Seed Orthology Search Options
+        - Min e-value: 200000
+        - Min bit score: 20
+* Download and compare GO terms
+
+
+```{r}
+em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
+                 stringsAsFactors = FALSE,
+                 header=FALSE) %>%
+    select(peptide = V1, em_prot = V2, em_go = V6, em_gene = V5, em_descript = V13) %>%
+    filter(peptide %in% fivepep) %>%
+    mutate(em_go = str_replace_all(em_go, pattern = ",", replacement = "; "))
+```
+
+
+## BLASTP against UniProt
+
+
+* Use the UniProtKB BLAST web search on each peptide, one-by-one
+* Parameters
+    - Target database: UniProtKB
+    - E-Threshold: 10
+    - Matrix: Auto
+    - Filtering: None
+    - Gapped: Yes
+    - Hits: 50
+* For each peptide, download the result list and get all GO terms and TaxID associated with that peptide
+* To match Unipept, annotate each peptide with only the GO terms that are present in 5% or more of the proteins
+* Get the most frequent protein name
+* For taxonomy, we can also calculate the lowest common ancestor of each peptide (TODO)
+
+```{r}
+peptide <- rep(0, 5)
+blast_go <- rep(0, 5)
+files <- list.files('uniprot_blastp_outputs')
+for (i in 1:5){
+    peptide[i] <- fivepep[i]
+    result <- read.delim(paste('uniprot_blastp_outputs', paste(fivepep[i], '.tab', sep=""), sep="/"),
+                   stringsAsFactors = FALSE,
+                   na.strings = c("", "NA", "NaN"))
+    gos <- table(unlist(str_split(result$Gene.ontology.IDs, "; ")))/50
+    blast_go[i] <- paste(names(gos)[which(gos > 0.05)], collapse = "; ")
+}
+blast <- data.frame(peptide, blast_go, stringsAsFactors = FALSE)
+```
+
+
+## MetaGOmics
+
+* Upload HOMD to metaGOmics
+* Parameters:
+    - Uniprot database: Uniprot sprot
+    - Blast e-value cutoff: 1e-10
+    - Use only top hit?: TRUE
+* Result URL: https://www.yeastrc.org/metagomics/viewUploadedFasta.do?uid=42jgJAcLHHZBoRQk 
+* One-by-one, upload peptides and run
+* Download results individually, combine into table
+
+
+```{r}
+peptide <- rep(0, 5)
+mg_go <- rep(0, 5)
+dir <- 'metaGOmics_single_peptides_outputs/'
+files <- list.files(dir)
+for (i in 1:5){
+    peptide[i] <- fivepep[i]
+    result <- read.delim(paste(dir, paste(fivepep[i], '.txt', sep=""), sep=""),
+                   stringsAsFactors = FALSE,
+                   na.strings = c("", "NA", "NaN"),
+                   comment.char = "#")
+    gos <- result$GO.acc
+    mg_go[i] <- paste(gos, collapse = "; ")
+}
+mg <- data.frame(peptide, mg_go, stringsAsFactors = FALSE)
+```
+
+
+## Combine all of the results:
+
+```{r}
+all_results <- plyr::join_all(list(em, blast, mg, uni), by = "peptide")
+```
+
+All of the results are below:
+
+```{r results = 'asis'}
+library(pander)
+knitr::kable(all_results)
+# pander::pander(all_results, split.cell = 1000, split.table = Inf)
+```
+
+## Let's go through the peptides one-by-one
+### AFLPGSLVDTRPVR
+
+Here, BLAST and Unipept give the same four GO terms:
+
+```{r}
+buni <- all_results[1, 'blast_go']
+buni
+```
+
+Let's go to the QuickGO API to get the names of these 4.
+```{r}
+library(httr)
+library(jsonlite)
+buni_split <- str_split(buni, "; ", simplify = TRUE)
+get_go_names <- function(id_vector){
+    base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
+    terms <- str_replace(id_vector, ":", "%3A")
+    joined_terms <- paste(terms, collapse="%2C")
+    term_url <- paste(base_url, joined_terms, sep="")
+    term_info <- GET(term_url, accept("application/json"))
+    json <- toJSON(content(term_info))
+    names <- unlist(fromJSON(json)$results$name)
+    names
+}
+get_go_names(buni_split)
+```
+
+On the other hand, both eggNOG mapper and metaGOmics give huge lists of GO terms. Are the 4 BLAST+Unipept terms contained in these lists?
+
+Does eggnog mapper contain all 4?
+```{r}
+all(str_detect(all_results[1, ]$em_go, pattern = buni_split))
+```
+
+Does metagomics contain all 4?
+```{r}
+all(str_detect(all_results[1, ]$mg_gos, pattern = buni_split))
+```
+
+The question is, then, what the other terms are.
+
+We can look at this in 3 ways:
+
+1) Are the extra terms more general (ancestors) of the 4 we found?
+2) Are there any terms which are more specific (children) of the 4 we found?
+3) Are there terms that are not ancestors or children? These may be false hits.
+
+
+Let's look at question 1):
+```{r}
+# get all ancestors of the 4 terms
+get_go_ancestors <- function(id_vector){
+    base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
+    terms <- str_replace(id_vector, ":", "%3A")
+    joined_terms <- paste(terms, collapse="%2C")
+    term_url <- paste(base_url, joined_terms, '/ancestors?relations=is_a', sep="")
+    term_info <- GET(term_url, accept("application/json"))
+    json <- toJSON(content(term_info))
+    names <- unlist(fromJSON(json)$results$ancestors)
+    names
+}
+ancestors <- get_go_ancestors(buni_split)
+get_go_names(ancestors)
+```
+
+Now, let's look at the overlap between the ancestors (including the original 4 terms) and eggnog mapper, and between the ancestors and metaGOmics:
+
+```{r}
+four_and_ancestors <- c(ancestors, buni_split)
+```
+
+```{r}
+metaGOmics_list <- c(str_split(all_results[1, 'mg_go'], "; ", simplify=TRUE))
+overlap <- length(intersect(four_and_ancestors, metaGOmics_list))
+overlap
+```
+
+```{r}
+eggnog_list <- c(str_split(all_results[1, 'em_go'], "; ", simplify =TRUE))
+overlap <- length(intersect(four_and_ancestors, eggnog_list))
+overlap
+```
+
+Let's do the same for the children:
+```{r}
+# get all childen of the 4 terms
+get_go_children <- function(id_vector){
+    base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
+    terms <- str_replace(id_vector, ":", "%3A")
+    joined_terms <- paste(terms, collapse="%2C")
+    term_url <- paste(base_url, joined_terms, '/descendants?relations=is_a', sep="")
+    term_info <- GET(term_url, accept("application/json"))
+    json <- toJSON(content(term_info))
+    names <- unlist(fromJSON(json)$results$descendants)
+    names
+}
+descendants <- get_go_children(buni_split)
+get_go_names(descendants)
+```
+
+
+```{r}
+four_and_descendants <- c(descendants, buni_split)
+```
+
+MetaGOmics overlap:
+```{r}
+length(intersect(four_and_descendants, metaGOmics_list))
+```
+
+eggNOG overlap with descendants:
+```{r}
+eggnog_list <- c(str_split(all_results[1, 'em_go'], "; ", simplify =TRUE))
+length(intersect(four_and_descendants, eggnog_list))
+```
+
+
+Ok, so still not a lot of overlap. Let's examine the terms that are neither the 4 terms or their descendants or ancestors:
+
+```{r}
+full_tree <- c(buni_split, ancestors, descendants)
+```
+
+
+metaGOmics
+```{r}
+diff <- setdiff(metaGOmics_list, full_tree)
+get_go_names(diff)
+```
+
+eggNOG mapper
+```{r}
+diff <- setdiff(eggnog_list, full_tree)
+get_go_names(diff)
+```
+
+Visualize the overlap between the full Blast+Unipept tree (descendants, ancestors) and the eggNOG and metaGOmics term lists.
+```{r fig.width=4, fig.height=4}
+library(VennDiagram)
+grid.newpage()
+grid.draw(venn.diagram(
+    list("eggnog" = eggnog_list, "blast+unipept" = full_tree, "metagomics" = metaGOmics_list),
+    NULL))
+file.remove(list.files(pattern = "VennDiagram.*log")) # venn diagram log files
+```
+
+## Future directions
+1) repeat this for the other 4 peptides
+2) how do we handle terms that are not descendants or ancestors? We could define some distance cutoff, and say that everything beyond that is a false hit. For example, we could say that if the shortest path between a metaGOmics or eggNOG term and any term in the full B+U tree has length greater than or equal to 2 than it is a false hit.
+
+
+## GO glossary
+
+Here, I get the names of all the above GO terms.
+
+```
+library(httr)
+library(jsonlite)
+base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
+term_url <- paste(base_url, 'GO%3A0008150%2CGO%3A0008152', sep="")
+term_info <- GET(term_url, verbose(), accept("application/json"))
+json <- toJSON(content(term_info))
+df <- fromJSON(json)$results
+```

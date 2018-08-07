@@ -1,3 +1,6 @@
+# database
+Merged_2ndStep_FirstOnly_DB_combined_NS_WS.fasta
+
 # History files
 .Rhistory
 .Rapp.history
@@ -16,6 +19,7 @@
 
 # RStudio files
 .Rproj.user/
+*.Rproj
 
 # produced vignettes
 vignettes/*.html
