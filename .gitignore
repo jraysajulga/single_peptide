@@ -19,7 +19,6 @@ Merged_2ndStep_FirstOnly_DB_combined_NS_WS.fasta
 
 # RStudio files
 .Rproj.user/
-*.Rproj
 
 # produced vignettes
 vignettes/*.html
@@ -38,3 +37,4 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+.Rproj.user
