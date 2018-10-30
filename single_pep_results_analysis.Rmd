@@ -163,28 +163,37 @@ pander::pander(all_results, split.cell = 80, split.table = Inf)
 ## Let's go through the peptides one-by-one
 ### AFLPGSLVDTRPVR
 
-Here, BLAST and Unipept give the same four GO terms:
+Here, BLAST and Unipept give the same GO terms:
 
 ```{r}
-buni <- all_results[1, 'blast_go']
+n <- 1
+blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
+uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
+         str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
+         str_split(all_results[n, 'uni_go_cc'], ";", simplify=TRUE))
+print(all_results[n, 'peptide'])
+setequal(uni, blast)
+#buni <- intersect(uni, blast)
+buni <- blast
+buni_split <- str_split(buni, "; ", simplify = TRUE)
 buni
 ```
 
+
 This is the metaGOmics list:
 ```{r}
-metaGOmics_list <- c(str_split(all_results[1, 'mg_go'], "; ", simplify=TRUE))
+metaGOmics_list <- c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE))
 ```
 
 And eggNOG
 ```{r}
-eggnog_list <- c(str_split(all_results[1, 'em_go'], "; ", simplify =TRUE))
+eggnog_list <- c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE))
 ```
 
-Let's go to the QuickGO API to get the names of the 4 BLAST/Unipept terms.
+Let's go to the QuickGO API to get the names of the BLAST/Unipept terms.
 ```{r}
 library(httr)
 library(jsonlite)
-buni_split <- str_split(buni, "; ", simplify = TRUE)
 get_go_names <- function(id_vector){
     base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
     terms <- str_replace(id_vector, ":", "%3A")
@@ -195,23 +204,24 @@ get_go_names <- function(id_vector){
     names <- unlist(fromJSON(json)$results$name)
     names
 }
+buni
 get_go_names(buni_split)
 ```
 
 On the other hand, both eggNOG mapper and metaGOmics give huge lists of GO terms. Are the 4 BLAST+Unipept terms contained in these lists?
 
-Does eggnog mapper contain all 4?
+Does eggnog mapper contain all BLAST/Unipept GO terms?
 ```{r}
-em_buni <- intersect(eggnog_list, buni_split)
+em_buni <- intersect(eggnog_list, buni)
 em_num_buni <- length(em_buni)
-em_num_buni == 4
+em_num_buni == length(buni_split)
 ```
 
-Does metagomics contain all 4?
+Does metagomics contain all BLAST/Unipept GO terms?
 ```{r}
-mg_buni <- intersect(metaGOmics_list, buni_split)
+mg_buni <- intersect(metaGOmics_list, buni)
 mg_num_buni <- length(mg_buni)
-mg_num_buni == 4
+mg_num_buni == length(buni_split)
 ```
 
 The question is, then, what the other terms are.
@@ -358,6 +368,7 @@ em_num_extraneous
 mg_extraneous <- setdiff(metaGOmics_list, closely_related)
 mg_num_extraneous <- length(mg_extraneous)
 mg_num_extraneous
+mg_extraneous
 ```
 
 ## Results
@@ -375,6 +386,13 @@ library(ggplot2)
 ggplot(term_df) +
     geom_bar(aes(x = Tool, y = NumTerms, fill = typeOfTerm), color = "black", stat = "identity") +
     theme_bw()
+```
+
+
+
+
+```{r}
+
 ```
 
 <!-- Calculate proportions to answer three questions: -->
