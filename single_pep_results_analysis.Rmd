@@ -204,7 +204,6 @@ get_go_names <- function(id_vector){
     names <- unlist(fromJSON(json)$results$name)
     names
 }
-buni
 get_go_names(buni_split)
 ```
 
@@ -266,6 +265,7 @@ eggnog mapper
 em_ancestors <- intersect(eggnog_list, ancestors)
 em_num_ancestors <- length(em_ancestors)
 em_num_ancestors
+em_ancestors
 ```
 
 metagomics
@@ -273,7 +273,13 @@ metagomics
 mg_ancestors <- intersect(metaGOmics_list, ancestors)
 mg_num_ancestors <- length(mg_ancestors)
 mg_num_ancestors
+mg_ancestors
 ```
+```{r}
+intersect(eggnog_list, metaGOmics_list)
+length(intersect(eggnog_list, metaGOmics_list))
+```
+
 
 ### Descendants
 
@@ -370,6 +376,10 @@ mg_num_extraneous <- length(mg_extraneous)
 mg_num_extraneous
 mg_extraneous
 ```
+```{r}
+em_extraneous
+mg_extraneous
+```
 
 ## Results
 
@@ -387,12 +397,135 @@ ggplot(term_df) +
     geom_bar(aes(x = Tool, y = NumTerms, fill = typeOfTerm), color = "black", stat = "identity") +
     theme_bw()
 ```
-
-
-
+setequal(
+          str_split(
+              gsub("\\s","",Unipept),
+              ";", simplify=TRUE),
+          str_split(
+            gsub("\\s","",blast_go),
+            ";", simplify=TRUE)
+```{r}
+colnames(all_results)
+```
+            
 
 ```{r}
+are_equal <- function(list1, list2){
+  # Removes spaces and split into list along semicolons
+  list1 <- str_split(
+              gsub("\\s","",list1),
+              ";", simplify=TRUE)
+  list2 <- str_split(
+              gsub("\\s","",list2),
+              ";", simplify=TRUE)
+  
+  # Tests if list1 and list2 are equal in identity (disregards order)
+  equalist <- character()
+  for (i in 1:nrow(list1)){
+    equalist[i] <- setequal(
+      list1[i,list1[i,] != ""],
+      list2[i,list2[i,] != ""])
+  }
+  equalist
+}
 
+calc_paths <- function(listA, listB){
+  
+}
+
+go_results <- all_results %>%
+  mutate(Unipept = paste(uni_go_bp, uni_go_mf, uni_go_cc, sep=";"),
+        Unipept_Blast = are_equal(blast_go,Unipept),
+        paths = calc_paths(blast_go, mg_go)) %>%
+  select(#peptide,
+          BLAST = blast_go,
+          Unipept,
+          Unipept_Blast,
+          mg_go,
+          em_go
+        )
+go_results
+
+
+#go_results <- go_results %>%
+#  mutate(Unipept_Blast = setequal(
+#    str_split(BLAST, "; ", simplify=TRUE),
+#    str_split(Unipept, "; ", simplify=TRUE)))
+
+#go_results
+```
+```{r}
+xuni <- na.omit(gsub("^$|^ $","NA", str_split(
+          gsub("\\s","",go_results[2,'Unipept']),
+        ';', simplify=TRUE)))
+xblast <- str_split(gsub("\\s","",go_results[2,'BLAST']),';', simplify=TRUE)
+#gsub("^$|^ $","NA",xuni)
+xuni
+xblast
+setequal(xuni, xblast)
+```
+
+uni <- read.csv('unipept_20_peptides_result.csv',
+                stringsAsFactors = FALSE) %>%
+    select(peptide,
+           uni_go_bp = GO..biological.process.,
+           uni_go_mf = GO..molecular.function.,
+           uni_go_cc = GO..cellular.component.) %>%
+    filter(peptide %in% fivepep) %>%
+    mutate(uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
+           uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = ""),
+           uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = ""))
+
+```{r}
+output <- data.frame(Peptide=character(),
+                     BLAST = character(),
+                     Unipept = character(),
+                     Buni = logical())
+#test <- data.frame(columnsadf = logical())
+for (n in 1:nrow(all_results)){
+  blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
+  uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
+         str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
+         str_split(all_results[n, 'uni_go_cc'], ";", simplify=TRUE))
+  peptide <- all_results[n,'peptide']
+  
+  row <- c(peptide,
+    all_results[n, 'blast_go'],
+    paste(unlist(uni), collapse=";"),
+    setequal(uni, blast))
+  print(typeof(peptide))
+  
+  #test <- rbind(test, c(TRUE))
+  #output <- rbind(output, row)
+  print(n-1)
+  output[n,] <- row
+}
+output
+```
+```{r}
+### Get distance -->
+get_paths <- function(from, to){
+     base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
+     from_clean <- str_replace(from, ":", "%3A")
+     to_clean <- str_replace(to, ":", "%3A")
+     term_url <- paste(base_url, from_clean,
+                       "/paths/", to_clean, "?relations=is_a", sep="")
+     paths <- GET(term_url, accept("application/json"))
+     json <- toJSON(content(paths))
+     names <- fromJSON(json)$results
+     names
+}
+
+shortest_path <- function(go1, go2){
+     paths1_2 <- get_paths(go1, go2)
+     print(paths1_2)
+     paths2_1 <- get_paths(go2, go1)
+     print(paths2_1)
+     paths <- c(paths1_2, paths2_1)
+     min(sapply(paths, length))
+}
+
+#shortest_path("GO:1901136", "GO:0008150")
 ```
 
 <!-- Calculate proportions to answer three questions: -->
