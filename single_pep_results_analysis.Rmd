@@ -376,10 +376,7 @@ mg_num_extraneous <- length(mg_extraneous)
 mg_num_extraneous
 mg_extraneous
 ```
-```{r}
-em_extraneous
-mg_extraneous
-```
+
 
 ## Results
 
@@ -410,6 +407,7 @@ colnames(all_results)
             
 
 ```{r}
+# TODO: Restructure to where you split within for loop
 are_equal <- function(list1, list2){
   # Removes spaces and split into list along semicolons
   list1 <- str_split(
@@ -429,79 +427,86 @@ are_equal <- function(list1, list2){
   equalist
 }
 
-calc_paths <- function(listA, listB){
-  
+calc_paths <- function(targ_list, ref_list){
+  for (i in 1:length(targ_list)){
+    extraneous <- str_split(
+              gsub("\\s","",ref_list[i]),
+              ";", simplify=TRUE)
+    #print(targ_list[i])
+    for (j in 1:length(ref_list)){
+      term1 <- targ_list[i]
+      term2 <- ref_list[j]
+      #print(term1)
+      #print(term2)
+      print(shortest_path(term1,term2))
+    }
+  }
 }
 
-go_results <- all_results %>%
-  mutate(Unipept = paste(uni_go_bp, uni_go_mf, uni_go_cc, sep=";"),
-        Unipept_Blast = are_equal(blast_go,Unipept),
-        paths = calc_paths(blast_go, mg_go)) %>%
-  select(#peptide,
-          BLAST = blast_go,
-          Unipept,
-          Unipept_Blast,
-          mg_go,
-          em_go
-        )
-go_results
-
-
-#go_results <- go_results %>%
-#  mutate(Unipept_Blast = setequal(
-#    str_split(BLAST, "; ", simplify=TRUE),
-#    str_split(Unipept, "; ", simplify=TRUE)))
-
-#go_results
-```
-```{r}
-xuni <- na.omit(gsub("^$|^ $","NA", str_split(
-          gsub("\\s","",go_results[2,'Unipept']),
-        ';', simplify=TRUE)))
-xblast <- str_split(gsub("\\s","",go_results[2,'BLAST']),';', simplify=TRUE)
-#gsub("^$|^ $","NA",xuni)
-xuni
-xblast
-setequal(xuni, xblast)
-```
-
-uni <- read.csv('unipept_20_peptides_result.csv',
-                stringsAsFactors = FALSE) %>%
-    select(peptide,
-           uni_go_bp = GO..biological.process.,
-           uni_go_mf = GO..molecular.function.,
-           uni_go_cc = GO..cellular.component.) %>%
-    filter(peptide %in% fivepep) %>%
-    mutate(uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
-           uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = ""),
-           uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = ""))
-
-```{r}
-output <- data.frame(Peptide=character(),
-                     BLAST = character(),
-                     Unipept = character(),
-                     Buni = logical())
-#test <- data.frame(columnsadf = logical())
-for (n in 1:nrow(all_results)){
+n <- nrow(all_results)
+output <- data.frame(Peptide = all_results[,'peptide'],
+                     BLAST = character(n),
+                     Unipept = character(n),
+                     Equal = logical(n),
+                     stringsAsFactors = FALSE)
+for (n in 1:1){
+#for (n in 1:nrow(all_results)){
   blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
   uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_cc'], ";", simplify=TRUE))
-  peptide <- all_results[n,'peptide']
+  blast <- blast[blast != ""]
+  uni <- uni[uni != ""]
+  buni <- blast
+  buni_split <- str_split(buni, ";", simplify = TRUE)
+  metaGOmics_list <- c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE))
+  eggnog_list <- c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE))
+
+  ancestors <- get_go_ancestors(buni_split)
+  descendants <- get_go_descendants(buni_split)
+  children_of_ancestors <- setdiff(unlist(get_children(ancestors)), ancestors)
+  closely_related <- union_all(buni_split, descendants, ancestors, children_of_ancestors)
+  #head(get_go_names(ancestors))
+  #head(get_go_names(descendants))
+
+  em_ancestors <- intersect(eggnog_list, ancestors)
+  mg_ancestors <- intersect(metaGOmics_list, ancestors)
+  em_descendants <- intersect(descendants, eggnog_list)
+  mg_descendants <- intersect(descendants, metaGOmics_list)
+  em_ancestors_kids <- intersect(eggnog_list, children_of_ancestors)
+  mg_ancestors_kids <- intersect(metaGOmics_list, children_of_ancestors)
+  em_extraneous <- setdiff(eggnog_list, closely_related)
+  mg_extraneous <- setdiff(metaGOmics_list, closely_related)
   
-  row <- c(peptide,
-    all_results[n, 'blast_go'],
-    paste(unlist(uni), collapse=";"),
-    setequal(uni, blast))
-  print(typeof(peptide))
+  #calc_paths(em_extraneous, blast)
   
-  #test <- rbind(test, c(TRUE))
+  #row <- c(all_results[n, 'blast_go'],
+  #         paste(uni, collapse=";"),
+  #         setequal(blast,uni),
+  #         TRUE)
+  #output[n,] <- row
+  #output.append(row)
   #output <- rbind(output, row)
-  print(n-1)
-  output[n,] <- row
+  output$BLAST[n] <- all_results[n, 'blast_go']
+  output$Unipept[n] <- paste(uni, collapse="; ")
+  output$Equal[n] <- setequal(uni, blast)
+  output$em.extraneous[n] <- paste(em_extraneous, collapse="; ")
+  output$mg.extraneous[n] <- paste(mg_extraneous, collapse="; ")
+  output$em.ancestors[n] <- paste(em_ancestors, collapse="; ")
+  output$mg.ancestors[n] <- paste(mg_ancestors, collapse="; ")
+  #output$em.ancestors[n] <- length(em_ancestors)
+  #output$mg.ancestors[n] <- length(mg_ancestors)
+  #output$em.descendants[n] <- length(em_descendants)
+  #output$mg.descendants[n] <- length(mg_descendants)
+  #output$em.ancestors.kids[n] <- length(em_ancestors_kids)
+  #output$mg.ancestors.kids[n] <- length(mg_ancestors_kids)
 }
-output
+
+#pander::pander(output, split.cell = 10, split.table = Inf)
 ```
+
+
+
 ```{r}
 ### Get distance -->
 get_paths <- function(from, to){
@@ -518,14 +523,20 @@ get_paths <- function(from, to){
 
 shortest_path <- function(go1, go2){
      paths1_2 <- get_paths(go1, go2)
-     print(paths1_2)
+     #print(paths1_2)
      paths2_1 <- get_paths(go2, go1)
-     print(paths2_1)
+     #print(paths2_1)
      paths <- c(paths1_2, paths2_1)
-     min(sapply(paths, length))
+     #print(paths)
+     if (length(paths1_2) + length(paths2_1) == 0){
+       'NA'
+     } else {
+      min(sapply(paths, length)) 
+     }
 }
-
-#shortest_path("GO:1901136", "GO:0008150")
+shortest_path("GO:1901136", "GO:0008150")
+shortest_path("GO:0006417", "GO:0003723")
+shortest_path("GO:0003674", "GO:0006412")
 ```
 
 <!-- Calculate proportions to answer three questions: -->
