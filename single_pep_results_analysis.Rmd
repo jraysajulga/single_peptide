@@ -417,7 +417,7 @@ shortest_path <- function(go1, go2){
      paths2_1 <- get_paths(go2, go1)
      #print(paths2_1)
      paths <- c(paths1_2, paths2_1)
-     #print(paths)
+     print(paths)
      if (length(paths1_2) + length(paths2_1) == 0){
        'NA'
      } else {
@@ -477,6 +477,9 @@ calc_paths <- function(targ_list, ref_list){
   }
   paste(output, collapse=" ")
 }
+```
+
+```{r}
 
 n <- nrow(all_results)
 output <- data.frame(Peptide = all_results[,'peptide'],
@@ -526,6 +529,7 @@ for (n in 1:1){
   mg_ancestors_kids <- intersect(metaGOmics_list, children_of_ancestors)
     mg_ancestors_kids <- setdiff(unlist(mg_ancestors_kids), buni_split)
     mg_num_ancestors_kids <- length(mg_ancestors_kids)
+  
   em_extraneous <- setdiff(eggnog_list, closely_related)
     em_num_extraneous <- length(em_extraneous)
   mg_extraneous <- setdiff(metaGOmics_list, closely_related)
@@ -538,7 +542,7 @@ for (n in 1:1){
   output$mg.extraneous[n] <- paste(mg_extraneous, collapse="; ")
   output$em.ancestors.kids[n] <- paste(em_ancestors_kids, collapse="; ")
   output$mg.ancestors.kids[n] <- paste(mg_ancestors_kids, collapse="; ")
-  #output$em.paths[n] <- calc_paths(em_extraneous, em_ancestors_kids)
+  output$em.paths[n] <- calc_paths(em_extraneous, em_ancestors_kids)
   #output$mg.paths[n] <- calc_paths(mg_extraneous, mg_ancestors_kids)
   
   output$em.ancestors[n] <- paste(em_ancestors, collapse="; ")
@@ -577,6 +581,17 @@ for (n in 1:1){
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
+
+```{r}
+str_split(output$em.paths[1], ' ', simplify = TRUE)
+```
+```{r}
+#shortest_path("GO:0003723", "GO:0065007")
+#get_go_ancestors("GO:0065007")
+#get_go_names(get_go_ancestors("GO:0008150"))
+get_go_names(str_split(output$em.extraneous[1], '; ', simplify = TRUE))
+```
+
 
 ```{r}
 # Check if there is no overlap between categories
