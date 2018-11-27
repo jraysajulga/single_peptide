@@ -542,7 +542,7 @@ for (n in 1:1){
   output$mg.extraneous[n] <- paste(mg_extraneous, collapse="; ")
   output$em.ancestors.kids[n] <- paste(em_ancestors_kids, collapse="; ")
   output$mg.ancestors.kids[n] <- paste(mg_ancestors_kids, collapse="; ")
-  output$em.paths[n] <- calc_paths(em_extraneous, em_ancestors_kids)
+  #output$em.paths[n] <- calc_paths(em_extraneous, em_ancestors_kids)
   #output$mg.paths[n] <- calc_paths(mg_extraneous, mg_ancestors_kids)
   
   output$em.ancestors[n] <- paste(em_ancestors, collapse="; ")
@@ -566,8 +566,11 @@ for (n in 1:1){
              mg_num_buni, mg_num_descendants, mg_num_ancestors, mg_num_ancestors_kids, mg_num_extraneous),
     Tool = rep(c("eggnog_mapper", "metagomics"), each = 5)
   )
-  plot <- ggplot(term_df) +
-    geom_bar(aes(x = Tool, y = NumTerms, fill = typeOfTerm), color = "black", stat = "identity") +
+  term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
+              levels = c("extraneous", "ancestors_kids", "ancestors", "descendants", "blast_and_unipept"))
+
+  plot <- ggplot(term_df, aes(x = Tool, y = NumTerms, fill = typeOfTerm)) +
+    geom_bar(color = "black", stat = "identity", position = "stack") +
     theme_bw()
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
@@ -583,13 +586,11 @@ for (n in 1:1){
 ``` 
 
 ```{r}
-str_split(output$em.paths[1], ' ', simplify = TRUE)
-```
-```{r}
+#str_split(output$em.paths[1], ' ', simplify = TRUE)
 #shortest_path("GO:0003723", "GO:0065007")
 #get_go_ancestors("GO:0065007")
 #get_go_names(get_go_ancestors("GO:0008150"))
-get_go_names(str_split(output$em.extraneous[1], '; ', simplify = TRUE))
+get_go_names(str_split(output$BLAST[1], '; ', simplify = TRUE))
 ```
 
 
