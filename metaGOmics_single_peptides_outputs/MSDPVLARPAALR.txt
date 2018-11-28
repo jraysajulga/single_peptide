@@ -1,0 +1,55 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Wed Nov 28 09:11:04 PST 2018
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0032787	biological_process	monocarboxylic acid metabolic process	10	10	1.0
+unknowncmp	cellular_component	unknown cellular component	10	10	1.0
+GO:0032259	biological_process	methylation	10	10	1.0
+GO:0016053	biological_process	organic acid biosynthetic process	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:1901362	biological_process	organic cyclic compound biosynthetic process	10	10	1.0
+GO:0019752	biological_process	carboxylic acid metabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0006790	biological_process	sulfur compound metabolic process	10	10	1.0
+GO:0009102	biological_process	biotin biosynthetic process	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:0051186	biological_process	cofactor metabolic process	10	10	1.0
+GO:0043436	biological_process	oxoacid metabolic process	10	10	1.0
+GO:0009110	biological_process	vitamin biosynthetic process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0044763	biological_process	single-organism cellular process	10	10	1.0
+GO:0008168	molecular_function	methyltransferase activity	10	10	1.0
+GO:0044249	biological_process	cellular biosynthetic process	10	10	1.0
+GO:0008171	molecular_function	O-methyltransferase activity	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0016740	molecular_function	transferase activity	10	10	1.0
+GO:0016741	molecular_function	transferase activity, transferring one-carbon groups	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0046394	biological_process	carboxylic acid biosynthetic process	10	10	1.0
+GO:0018130	biological_process	heterocycle biosynthetic process	10	10	1.0
+GO:0043603	biological_process	cellular amide metabolic process	10	10	1.0
+GO:0043604	biological_process	amide biosynthetic process	10	10	1.0
+GO:0044271	biological_process	cellular nitrogen compound biosynthetic process	10	10	1.0
+GO:0044272	biological_process	sulfur compound biosynthetic process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0010340	molecular_function	carboxyl-O-methyltransferase activity	10	10	1.0
+GO:1901564	biological_process	organonitrogen compound metabolic process	10	10	1.0
+GO:0044281	biological_process	small molecule metabolic process	10	10	1.0
+GO:0072330	biological_process	monocarboxylic acid biosynthetic process	10	10	1.0
+GO:1901566	biological_process	organonitrogen compound biosynthetic process	10	10	1.0
+GO:0044283	biological_process	small molecule biosynthetic process	10	10	1.0
+GO:0006082	biological_process	organic acid metabolic process	10	10	1.0
+GO:0006766	biological_process	vitamin metabolic process	10	10	1.0
+GO:0006767	biological_process	water-soluble vitamin metabolic process	10	10	1.0
+GO:1901576	biological_process	organic substance biosynthetic process	10	10	1.0
+GO:0006768	biological_process	biotin metabolic process	10	10	1.0
+GO:0042364	biological_process	water-soluble vitamin biosynthetic process	10	10	1.0
+GO:0044699	biological_process	single-organism process	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0044710	biological_process	single-organism metabolic process	10	10	1.0
+GO:0044711	biological_process	single-organism biosynthetic process	10	10	1.0
+GO:0009058	biological_process	biosynthetic process	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
