@@ -17,16 +17,31 @@ knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
 
 The single peptide analysis methods and results are contained in this document. 
 
-## Five peptide analysis
+## Twenty peptide analysis
 
-The five peptides are as follows:
+The twenty peptides are as follows:
 
 ```{r}
-fivepep <- c('AFLPGSLVDTRPVR',
-             'DIAMQIAAVNPTYLNREEVPTEVIEHEK',
-             'DLFKNPIHPYTK',
-             'DVTIEAVNSLYEK',
-             'EVPDWAAQLNENTNVKGLRIAVPK')
+peptides <- c("AFLPGSLVDTRPVR",
+	"DIAMQIAAVNPTYLNREEVPTEVIEHEK",
+	"DLFKNPIHPYTK",
+	"DVTIEAVNSLYEK",
+	"EVPDWAAQLNENTNVKGLRIAVPK",
+	"HLPYIGILK",
+	"IAFISGASSGIGK",
+	"IGTTGAIQPHINVGDLLVTTGAVR",
+	"IYVGMGSIAAMK",
+	"LFDQTGK",
+	"MIYLTDAR",
+	"MSDPVLARPAALR",
+	"MTQETIYQK",
+	"NFGMANPEGYR",
+	"SDEASETIPSTPSQMEFAK",
+	"TVAMDSTDGLK",
+	"TVETDGYNAIQVGFDDK",
+	"VINGAATSLGR",
+	"VQTAIEMPK",
+	"VTISFISAVRPF")
 ```
 
 ## Unipept
@@ -51,11 +66,10 @@ uni <- read.csv('unipept_20_peptides_result.csv',
            uni_go_bp = GO..biological.process.,
            uni_go_mf = GO..molecular.function.,
            uni_go_cc = GO..cellular.component.) %>%
-    filter(peptide %in% fivepep) %>%
+    #filter(peptide %in% fivepep) %>%
     mutate(uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
            uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = ""),
            uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = ""))
-
 ```
 
 
@@ -79,7 +93,7 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
                  stringsAsFactors = FALSE,
                  header=FALSE) %>%
     select(peptide = V1, em_prot = V2, em_go = V6, em_gene = V5, em_descript = V13) %>%
-    filter(peptide %in% fivepep) %>%
+    #filter(peptide %in% fivepep) %>%
     mutate(em_go = str_replace_all(em_go, pattern = ",", replacement = "; "))
 ```
 
@@ -101,18 +115,20 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
 * For taxonomy, we can also calculate the lowest common ancestor of each peptide (TODO)
 
 ```{r}
-peptide <- rep(0, 5)
-blast_go <- rep(0, 5)
+peptide <- rep(0, length(peptides))
+blast_go <- rep(0, length(peptides))
 files <- list.files('uniprot_blastp_outputs')
-for (i in 1:5){
-    peptide[i] <- fivepep[i]
-    result <- read.delim(paste('uniprot_blastp_outputs', paste(fivepep[i], '.tab', sep=""), sep="/"),
+for (i in 1:length(peptides)){
+    peptide[i] <- peptides[i]
+    print(peptide[i])
+    result <- read.delim(paste('uniprot_blastp_outputs', paste(peptides[i], '.tab', sep=""), sep="/"),
                    stringsAsFactors = FALSE,
                    na.strings = c("", "NA", "NaN"))
     gos <- table(unlist(str_split(result$Gene.ontology.IDs, "; ")))/50
     blast_go[i] <- paste(names(gos)[which(gos > 0.05)], collapse = "; ")
 }
 blast <- data.frame(peptide, blast_go, stringsAsFactors = FALSE)
+blast
 ```
 
 
@@ -417,7 +433,7 @@ shortest_path <- function(go1, go2){
      paths2_1 <- get_paths(go2, go1)
      #print(paths2_1)
      paths <- c(paths1_2, paths2_1)
-     print(paths)
+     #print(paths)
      if (length(paths1_2) + length(paths2_1) == 0){
        'NA'
      } else {
@@ -506,34 +522,22 @@ for (n in 1:1){
   metaGOmics_list <- c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE))
   eggnog_list <- c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE))
 
-  ancestors <- get_go_ancestors(buni_split)
-    ancestors <- setdiff(unlist(ancestors), buni_split)
-  descendants <- get_go_descendants(buni_split)
-    descendants <- setdiff(unlist(descendants), buni_split)
-  children_of_ancestors <- setdiff(unlist(get_children(ancestors)), ancestors)
+  ancestors <- setdiff(unlist(get_go_ancestors(buni_split)), buni_split)
+  descendants <- setdiff(unlist(get_go_descendants(buni_split)), buni_split)
+  children_of_ancestors <- setdiff(unlist(get_children(matrix(ancestors))), ancestors)
   closely_related <- union_all(buni_split, descendants, ancestors, children_of_ancestors)
-  #head(get_go_names(ancestors))
-  #head(get_go_names(descendants))
 
   em_ancestors <- intersect(eggnog_list, ancestors)
-    em_num_ancestors <- length(em_ancestors)
   mg_ancestors <- intersect(metaGOmics_list, ancestors)
-    mg_num_ancestors <- length(mg_ancestors)
   em_descendants <- intersect(descendants, eggnog_list)
-    em_num_descendants <- length(em_descendants)
   mg_descendants <- intersect(descendants, metaGOmics_list)
-    mg_num_descendants <- length(mg_descendants)
-  em_ancestors_kids <- intersect(eggnog_list, children_of_ancestors)
-    em_ancestors_kids <- setdiff(unlist(em_ancestors_kids), buni_split)
-    em_num_ancestors_kids <- length(em_ancestors_kids)
-  mg_ancestors_kids <- intersect(metaGOmics_list, children_of_ancestors)
-    mg_ancestors_kids <- setdiff(unlist(mg_ancestors_kids), buni_split)
-    mg_num_ancestors_kids <- length(mg_ancestors_kids)
+  em_ancestors_kids <- setdiff(unlist(intersect(eggnog_list, children_of_ancestors)), buni_split)
+  mg_ancestors_kids <- setdiff(unlist(intersect(metaGOmics_list, children_of_ancestors)), buni_split)
+  #em_ancestors_descendants <- setdiff(unlist(intersect(eggnog_list, descendants_of_ancestors)), buni_split)
+  #mg_ancestors_descendants <- setdiff(unlist(intersect(metaGOmics_list, descendants_of_ancestors)), buni_split)
   
   em_extraneous <- setdiff(eggnog_list, closely_related)
-    em_num_extraneous <- length(em_extraneous)
   mg_extraneous <- setdiff(metaGOmics_list, closely_related)
-    mg_num_extraneous <- length(mg_extraneous)
   
   output$BLAST[n] <- all_results[n, 'blast_go']
   output$Unipept[n] <- paste(uni, collapse="; ")
@@ -561,16 +565,19 @@ for (n in 1:1){
     mg_num_buni <- length(mg_buni)
   
   term_df <- data.frame(
-    typeOfTerm = rep(c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"), 2),
-    NumTerms = c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous,
-             mg_num_buni, mg_num_descendants, mg_num_ancestors, mg_num_ancestors_kids, mg_num_extraneous),
+    typeOfTerm = rep(c("BLAST and Unipept", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 2),
+    NumTerms = c(em_num_buni, length(em_descendants), length(em_ancestors), length(em_ancestors_kids), length(em_extraneous),
+             length(mg_buni), length(mg_descendants), length(mg_ancestors), length(mg_ancestors_kids), length(mg_extraneous)),
     Tool = rep(c("eggnog_mapper", "metagomics"), each = 5)
   )
   term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
-              levels = c("extraneous", "ancestors_kids", "ancestors", "descendants", "blast_and_unipept"))
+              levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST and Unipept"))
 
   plot <- ggplot(term_df, aes(x = Tool, y = NumTerms, fill = typeOfTerm)) +
     geom_bar(color = "black", stat = "identity", position = "stack") +
+    scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
+                      "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
+                      "Descendants" = "#4FAFE4", "BLAST and Unipept" = "#5DBA85")) +
     theme_bw()
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
