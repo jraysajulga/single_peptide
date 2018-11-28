@@ -95,7 +95,6 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
     select(peptide = V1, em_prot = V2, em_go = V6, em_gene = V5, em_descript = V13) %>%
     #filter(peptide %in% fivepep) %>%
     mutate(em_go = str_replace_all(em_go, pattern = ",", replacement = "; "))
-em
 ```
 
 
@@ -125,8 +124,7 @@ for (i in 1:length(peptides)){
     gos <- table(unlist(str_split(result$Gene.ontology.IDs, "; ")))/50
     blast_go[i] <- paste(names(gos)[which(gos > 0.05)], collapse = "; ")
 }
-blast <- data.frame(peptides, blast_go, stringsAsFactors = FALSE)
-blast
+blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
 ```
 
 
@@ -143,21 +141,18 @@ blast
 
 
 ```{r}
-peptide <- rep(0, 5)
-mg_go <- rep(0, 5)
+mg_go <- rep(0, length(peptides))
 dir <- 'metaGOmics_single_peptides_outputs/'
 files <- list.files(dir)
-for (i in 1:5){
-    peptide[i] <- fivepep[i]
-    result <- read.delim(paste(dir, paste(fivepep[i], '.txt', sep=""), sep=""),
+for (i in 1:length(peptides)){
+    result <- read.delim(paste(dir, paste(peptides[i], '.txt', sep=""), sep=""),
                    stringsAsFactors = FALSE,
                    na.strings = c("", "NA", "NaN"),
                    comment.char = "#")
     gos <- result$GO.acc
     mg_go[i] <- paste(gos, collapse = "; ")
 }
-mg <- data.frame(peptide, mg_go, stringsAsFactors = FALSE)
-mg
+mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
 ```
 
 
@@ -507,8 +502,8 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 #all_results <- all_results[3:5,]
 #all_results <- old_all_results
 library(ggplot2)
-for (n in 1:1){
-#for (n in 1:nrow(all_results)){
+#for (n in 1:1){
+for (n in 1:nrow(all_results)){
   blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
   uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
@@ -577,7 +572,8 @@ for (n in 1:1){
     scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
                       "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
                       "Descendants" = "#4FAFE4", "BLAST and Unipept" = "#5DBA85")) +
-    theme_bw()
+    ggtitle(all_results[n, 'peptide']) +
+    theme_update(plot.title = element_text(hjust = 0.5))
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("EggNOG\n", all_results[n,'peptide']))
