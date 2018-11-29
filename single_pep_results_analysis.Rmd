@@ -502,8 +502,8 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 #all_results <- all_results[3:5,]
 #all_results <- old_all_results
 library(ggplot2)
-#for (n in 1:1){
-for (n in 1:nrow(all_results)){
+for (n in 1:1){
+#for (n in 1:nrow(all_results)){
   blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
   uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
@@ -516,6 +516,9 @@ for (n in 1:nrow(all_results)){
   metaGOmics_list <- c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE))
   eggnog_list <- c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE))
 
+  output$em.list[n] <- paste(eggnog_list, collapse="; ")
+  output$mg.list[n] <- paste(metaGOmics_list, collapse="; ")
+    
   ancestors <- setdiff(unlist(get_go_ancestors(buni_split)), buni_split)
   descendants <- setdiff(unlist(get_go_descendants(buni_split)), buni_split)
   children_of_ancestors <- setdiff(unlist(get_children(matrix(ancestors))), ancestors)
@@ -587,6 +590,7 @@ for (n in 1:nrow(all_results)){
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
 
+
 ```{r}
 #str_split(output$em.paths[1], ' ', simplify = TRUE)
 #shortest_path("GO:0003723", "GO:0065007")
@@ -601,7 +605,8 @@ get_go_names(str_split(output$BLAST[1], '; ', simplify = TRUE))
 n <- 1
 length(str_split(output$BLAST[n],'; ', simplify=TRUE)) + length(str_split(output$em.descendants[n],'; ', simplify=TRUE)) +
 length(str_split(output$em.ancestors[n],'; ', simplify=TRUE)) + length(str_split(output$em.ancestors.kids[n],'; ', simplify=TRUE)) +
-length(str_split(output$em.extraneous[n],'; ', simplify=TRUE)) == length(eggnog_list)
+length(str_split(output$em.extraneous[n],'; ', simplify=TRUE))
+length(eggnog_list)
 ```
 
 
