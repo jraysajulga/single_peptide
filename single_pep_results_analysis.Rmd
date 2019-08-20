@@ -503,7 +503,7 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 #all_results <- old_all_results
 library(ggplot2)
 for (n in 1:1){
-#for (n in 1:nrow(all_results)){
+# for (n in 1:nrow(all_results)){
   blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
   uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
@@ -576,7 +576,11 @@ for (n in 1:1){
                       "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
                       "Descendants" = "#4FAFE4", "BLAST and Unipept" = "#5DBA85")) +
     ggtitle(all_results[n, 'peptide']) +
-    theme_update(plot.title = element_text(hjust = 0.5))
+    theme_update(plot.title = element_text(hjust = 0.5)) +
+    theme(legend.title=element_text(size=2),
+          legend.text=element_text(size=10),
+          legend.position="top",
+          legend.spacing.x = unit(0.2, "cm"))
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("EggNOG\n", all_results[n,'peptide']))
