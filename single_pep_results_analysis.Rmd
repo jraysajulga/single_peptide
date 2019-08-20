@@ -502,8 +502,8 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 #all_results <- all_results[3:5,]
 #all_results <- old_all_results
 library(ggplot2)
-for (n in 1:1){
-# for (n in 1:nrow(all_results)){
+# for (n in 1:1){
+for (n in 1:nrow(all_results)){
   blast <- str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)
   uni <- c(str_split(all_results[n, 'uni_go_bp'], ";", simplify=TRUE),
          str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE),
@@ -590,7 +590,7 @@ for (n in 1:1){
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("MetaGOmics\n", all_results[n,'peptide']))
   print(plot)
-  ggsave(paste("plots/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 3, height = 5, dpi = 300, units = "in")
+  ggsave(paste("plots/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 3, height = 6, dpi = 300, units = "in")
   #print(plot_em)
   #print(plot_mg)
 }
