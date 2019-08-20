@@ -588,6 +588,7 @@ for (n in 1:1){
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("MetaGOmics\n", all_results[n,'peptide']))
   print(plot)
+  ggsave(paste("plots/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 3, height = 5, dpi = 300, units = "in")
   #print(plot_em)
   #print(plot_mg)
 }
