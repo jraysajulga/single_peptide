@@ -565,7 +565,7 @@ for (n in 1:nrow(all_results)){
     typeOfTerm = rep(c("BLAST and Unipept", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 2),
     NumTerms = c(em_num_buni, length(em_descendants), length(em_ancestors), length(em_ancestors_kids), length(em_extraneous),
              length(mg_buni), length(mg_descendants), length(mg_ancestors), length(mg_ancestors_kids), length(mg_extraneous)),
-    Tool = rep(c("eggNOG mapper", "metaGOmics"), each = 5)
+    Tool = rep(c("eggNOG\nmapper", "metaGOmics"), each = 5)
   )
   term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
               levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST and Unipept"))
@@ -578,10 +578,11 @@ for (n in 1:nrow(all_results)){
     ylab("Number of Terms") +
     ggtitle(all_results[n, 'peptide']) +
     theme_update(plot.title = element_text(hjust = 0.5)) +
-    theme(legend.title=element_text(size=2),
-          legend.text=element_text(size=10),
-          legend.position="top",
+    theme(legend.title=element_text(size=22),
+          legend.text=element_text(size=18),
+          legend.position="right",
           legend.spacing.x = unit(0.2, "cm"),
+          axis.text.x = element_text(size=8),
           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
@@ -590,7 +591,7 @@ for (n in 1:nrow(all_results)){
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("MetaGOmics\n", all_results[n,'peptide']))
   print(plot)
-  ggsave(paste("plots/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 3, height = 6, dpi = 300, units = "in")
+  ggsave(paste("plots/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 5, height = 4, dpi = 800, units = "in")
   #print(plot_em)
   #print(plot_mg)
 }
