@@ -565,7 +565,7 @@ for (n in 1:1){
     typeOfTerm = rep(c("BLAST and Unipept", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 2),
     NumTerms = c(em_num_buni, length(em_descendants), length(em_ancestors), length(em_ancestors_kids), length(em_extraneous),
              length(mg_buni), length(mg_descendants), length(mg_ancestors), length(mg_ancestors_kids), length(mg_extraneous)),
-    Tool = rep(c("eggnog_mapper", "metagomics"), each = 5)
+    Tool = rep(c("eggNOG mapper", "metaGOmics"), each = 5)
   )
   term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
               levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST and Unipept"))
@@ -575,12 +575,14 @@ for (n in 1:1){
     scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
                       "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
                       "Descendants" = "#4FAFE4", "BLAST and Unipept" = "#5DBA85")) +
+    ylab("Number of Terms") +
     ggtitle(all_results[n, 'peptide']) +
     theme_update(plot.title = element_text(hjust = 0.5)) +
     theme(legend.title=element_text(size=2),
           legend.text=element_text(size=10),
           legend.position="top",
-          legend.spacing.x = unit(0.2, "cm"))
+          legend.spacing.x = unit(0.2, "cm"),
+          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
   # plot_em <- pie(c(em_num_buni, em_num_descendants, em_num_ancestors, em_num_ancestors_kids, em_num_extraneous), 
   #     labels = c("blast_and_unipept", "descendants", "ancestors", "ancestors_kids", "extraneous"),
   #     main=paste("EggNOG\n", all_results[n,'peptide']))
