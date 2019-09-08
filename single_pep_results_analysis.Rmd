@@ -218,6 +218,7 @@ However, we can also consider that terms that are not ancestors or descendants c
 library(httr)
 library(jsonlite)
 get_go_names <- function(id_vector){
+  if (length(id_vector) > 0){
     base_url <- 'https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/'
     terms <- str_replace(id_vector, ":", "%3A")
     joined_terms <- paste(terms, collapse="%2C")
@@ -226,6 +227,7 @@ get_go_names <- function(id_vector){
     json <- toJSON(content(term_info))
     names <- unlist(fromJSON(json)$results$name)
     names
+  }
 }
 ```
 
@@ -311,8 +313,8 @@ for (n in 1:1){
   
   em_descendants <- intersect(descendants, eggnog_list)
   mg_descendants <- intersect(descendants, metaGOmics_list)
-  em_ancestors_kids <- setdiff(unlist(intersect(eggnog_list, children_of_ancestors)), buni_split)
-  mg_ancestors_kids <- setdiff(unlist(intersect(metaGOmics_list, children_of_ancestors)), buni_split)
+  em_ancestors_kids <- setdiff(unlist(intersect(eggnog_list, children_of_ancestors)), blast)
+  mg_ancestors_kids <- setdiff(unlist(intersect(metaGOmics_list, children_of_ancestors)), blast)
   print("Descendants:")
   print("eggnog:")
   print(get_go_names(em_descendants))
@@ -328,12 +330,13 @@ for (n in 1:1){
   print("metagomics:")
   print(get_go_names(mg_extraneous))
   print("")
+  print(em_extraneous)
   
   em_blast <- intersect(eggnog_list, blast)
   mg_blast <- intersect(metaGOmics_list, blast)
   
   term_df <- data.frame(
-    typeOfTerm = rep(c("BLAST and Unipept", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 2),
+    typeOfTerm = rep(c("BLAST", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 2),
     NumTerms = c(length(em_blast), length(em_descendants), length(em_ancestors), length(em_ancestors_kids), length(em_extraneous),
                  length(mg_blast), length(mg_descendants), length(mg_ancestors), length(mg_ancestors_kids), length(mg_extraneous)),
     Tool = rep(c("eggNOG\nmapper", "metaGOmics"), each = 5)
@@ -346,7 +349,7 @@ for (n in 1:1){
     geom_bar(color = "black", stat = "identity", position = "stack", size = 0.1) +
     scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
                                                  "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
-                                                 "Descendants" = "#4FAFE4", "BLAST and Unipept" = "#5DBA85")) +
+                                                 "Descendants" = "#4FAFE4", "BLAST" = "#5DBA85")) +
     ylab("Number of Terms") +
     # ylab(" ") + xlab(" ") +
     ggtitle(all_results[n, 'peptide']) +
@@ -359,7 +362,7 @@ for (n in 1:1){
           legend.spacing.x = unit(0.8, "cm"),
           axis.text.x = element_text(size=8),
           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
-  #print(plot)
+  print(plot)
   ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 5, height = 4, dpi = 800, units = "in")
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
