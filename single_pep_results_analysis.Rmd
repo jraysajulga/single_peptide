@@ -285,7 +285,7 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 	                     Unipept = character(n),
 	                     Equal = logical(n),
 	                     stringsAsFactors = FALSE)
-#for (n in 7:7){
+#for (n in 1:1){
 for (n in 1:nrow(all_results)){
   print(all_results[n, 'peptide'])
   blast <- unique(c(str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)))
@@ -338,6 +338,13 @@ for (n in 1:nrow(all_results)){
   print("metagomics:")
   print(get_go_names(mg_descendants))
   print("")
+  print("Ancestors' kids:")
+  print("eggnog:")
+  print(get_go_names(em_ancestors_kids))
+  print("metagomics:")
+  print(get_go_names(mg_ancestors_kids))
+  print(mg_ancestors_kids)
+  print("")
   
   em_extraneous <- setdiff(eggnog_list, closely_related)
   mg_extraneous <- setdiff(metaGOmics_list, closely_related)
@@ -362,7 +369,7 @@ for (n in 1:nrow(all_results)){
                  get_length(em_blast), get_length(em_descendants), get_length(em_ancestors), get_length(em_ancestors_kids), get_length(em_extraneous),
                  get_length(mg_blast), get_length(mg_descendants), get_length(mg_ancestors), get_length(mg_ancestors_kids), get_length(mg_extraneous),
                  get_length(uni_blast), get_length(uni_descendants), get_length(uni_ancestors), get_length(uni_ancestors_kids), get_length(uni_extraneous)),
-    Tool = rep(c("BLAST", "EggNOG\nmapper", "MetaGOmics", "Unipept"), each = 5)
+    Tool = rep(c("BLAST", "EggNOG mapper", "MetaGOmics", "Unipept"), each = 5)
   )
   term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
                                levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST"))
@@ -375,18 +382,23 @@ for (n in 1:nrow(all_results)){
                                                  "Descendants" = "#4FAFE4", "BLAST" = "#5DBA85")) +
     ylab("Number of Terms") +
     # ylab(" ") + xlab(" ") +
+    scale_y_continuous(breaks = round(seq(0, max(sapply(unique(term_df$typeOfTerm), function( tool ) {
+                                            sum(term_df[term_df$typeOfTerm == tool,]$NumTerms)  
+                                          })), by = 2) + 2,1)) +
     ggtitle(all_results[n, 'peptide']) +
-    theme_update(plot.title = element_text(hjust = 0.5, size = 6)) +
+    #theme_update(plot.title = element_text(hjust = 0.5, size = 6)) +
+    theme_classic() + 
     theme(legend.title=element_text(size=22),
           #legend.title=element_blank(),
+          plot.title = element_text(size = 8, hjust = 0.5, face = "bold"),
           legend.text=element_text(size=18),
           legend.position="right",
           #legend.position="none",
           legend.spacing.x = unit(0.8, "cm"),
-          axis.text.x = element_text(size=8),
+          axis.text.x = element_text(size=8, angle = 90, hjust = 0.95, vjust = 0.2),
           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
   print(plot)
-  ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 6, height = 4, dpi = 800, units = "in")
+  ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
@@ -394,7 +406,6 @@ for (n in 1:nrow(all_results)){
 length(closely_related)
 #!grepl("GO:\\d{7}",closely_related)
 ```
-
 
 ```{r}
 #str_split(output$em.paths[1], ' ', simplify = TRUE)
