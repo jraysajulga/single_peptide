@@ -98,10 +98,18 @@ ontology <- "MF"
 library(dplyr)
 library(stringr)
 cov_pat <- "\ \\(.{2,4}\\)"
-uni <- read.csv('unipept_results/Galaxy13-[Unipept_pept2go_on_data_11_tsv].tabular',
-                stringsAsFactors = FALSE, sep = "\t") %>%
-    select(peptide = X.peptide, uni_go = go_terms) %>%
-    mutate(go_terms = sapply(uni_go, function( x ) { paste(filterOntology(strsplit(x, ",")[[1]], ontology), collapse="; ")}))
+uni <- read.csv('unipept_results/mpa_result.csv',
+                stringsAsFactors = FALSE) %>%
+    select(peptide,
+           #uni_go_bp = GO..biological.process.,
+           uni_go_mf = GO..molecular.function.
+           #uni_go_cc = GO..cellular.component.
+           ) %>%
+    #filter(peptide %in% fivepep) %>%
+    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
+           uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = "")
+           #uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = "")
+           )
 uni
 ```
 
@@ -316,15 +324,11 @@ for (n in 1:nrow(all_results)){
   print(get_go_names(blast))
   print("")
   
-  uni <- unique(c(str_split(all_results[n, 'uni_go'], ",", simplify=TRUE)))
+  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE)))
   uni <- uni[uni != ""]
   print("unipept terms:")
   print(uni)
-  if (length(uni) < 100){
-    print(get_go_names(uni))    
-  } else{
-    print("Too many terms to print!")
-  }
+  print(get_go_names(uni))
   print("")
   
   eggnog_list <- unique(c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE)))
