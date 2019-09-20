@@ -100,8 +100,8 @@ library(stringr)
 cov_pat <- "\ \\(.{2,4}\\)"
 uni <- read.csv('unipept_results/Galaxy13-[Unipept_pept2go_on_data_11_tsv].tabular',
                 stringsAsFactors = FALSE, sep = "\t") %>%
-    select(peptide = X.peptide, go_terms) %>%
-    mutate(go_terms = sapply(go_terms, function( x ) { paste(filterOntology(strsplit(x, ",")[[1]], ontology), collapse="; ")}))
+    select(peptide = X.peptide, uni_go = go_terms) %>%
+    mutate(go_terms = sapply(uni_go, function( x ) { paste(filterOntology(strsplit(x, ",")[[1]], ontology), collapse="; ")}))
 uni
 ```
 
@@ -316,10 +316,15 @@ for (n in 1:nrow(all_results)){
   print(get_go_names(blast))
   print("")
   
-  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE)))
+  uni <- unique(c(str_split(all_results[n, 'uni_go'], ",", simplify=TRUE)))
   uni <- uni[uni != ""]
   print("unipept terms:")
-  print(get_go_names(uni))
+  print(uni)
+  if (length(uni) < 100){
+    print(get_go_names(uni))    
+  } else{
+    print("Too many terms to print!")
+  }
   print("")
   
   eggnog_list <- unique(c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE)))
@@ -335,7 +340,10 @@ for (n in 1:nrow(all_results)){
   
   ancestors <- setdiff(unlist(get_go_ancestors(blast)), blast)
   descendants <- setdiff(unlist(get_go_descendants(blast)), blast)
-  children_of_ancestors <- setdiff(unlist(get_children(matrix(ancestors))), ancestors)
+  children_of_ancestors <- ""
+  if (length(ancestors) > 0){
+    children_of_ancestors <- setdiff(unlist(get_children(matrix(ancestors))), ancestors)
+  }
   closely_related <- union_all(blast, descendants, ancestors, children_of_ancestors)
   
   em_ancestors <- intersect(eggnog_list, ancestors)
