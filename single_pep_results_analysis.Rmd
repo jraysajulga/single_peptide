@@ -220,6 +220,15 @@ mg
 
 ```{r}
 all_results <- plyr::join_all(list(em, blast, mg, uni), by = "peptide")
+peptide <- "IFVCDD"
+"BLAST"
+all_results[grepl(peptide, all_results$peptide),][1,]$blast_names
+"EM"
+all_results[grepl(peptide, all_results$peptide),][1,]$em_names
+"MG"
+all_results[grepl(peptide, all_results$peptide),][1,]$mg_names
+"Uni"
+all_results[grepl(peptide, all_results$peptide),][1,]$uni_go_names
 all_results
 ```
 
