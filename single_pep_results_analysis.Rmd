@@ -110,6 +110,7 @@ uni <- read.csv('unipept_results/mpa_result.csv',
            uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = "")
            #uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = "")
            )
+uni$uni_go_names <- sapply(strsplit(uni$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
 uni
 ```
 
@@ -133,11 +134,12 @@ uni
 em <- read.delim("eggnog_results/Galaxy15-[eggNOG_Mapper_on_data_12__diamond.annotations].tabular",
                  stringsAsFactors = FALSE,
                  header=FALSE) %>%
-    select(peptide = V1, em_prot = V2, em_go = V6, em_gene = V5, em_descript = V13) %>%
+    select(peptide = V1, em_go = V6) %>%
     #filter(peptide %in% fivepep) %>%
     mutate(em_go = sapply(em_go, function ( go ) {
       paste(filterOntology(str_split(go, ",")[[1]], ontology), collapse="; ")
     }))
+em$em_names <- sapply(strsplit(em$em_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
 em
 ```
 
@@ -180,6 +182,7 @@ for (i in 1:length(peptides)){
   }
 }
 blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
+blast$blast_names <- sapply(strsplit(blast$blast_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
 blast
 ```
 
@@ -209,6 +212,7 @@ for (i in 1:length(peptides)){
     mg_go[i] <- paste(gos, collapse = "; ")
 }
 mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
+mg$mg_names <- sapply(strsplit(mg$mg_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
 mg
 ```
 
