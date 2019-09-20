@@ -1,0 +1,11 @@
+Entry	Gene ontology (GO)	Gene ontology IDs	Gene ontology (cellular component)	Gene ontology (molecular function)	Gene ontology (biological process)
+S3JME6	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+R9JNR2	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+A5TVJ1	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+A0A0Z8EUA4	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+A0A1W5B7W4					
+A0A1W5B2Z2					
+H2ZMJ3					
+H2ZMJ2					
+F6R815	cortical actin cytoskeleton [GO:0030864]; cytoplasm [GO:0005737]; plasma membrane [GO:0005886]; GTPase activator activity [GO:0005096]; myosin II binding [GO:0045159]; Rab GTPase binding [GO:0017137]; syntaxin binding [GO:0019905]; cortical actin cytoskeleton organization [GO:0030866]; establishment of spindle orientation [GO:0051294]; regulation of establishment or maintenance of cell polarity [GO:0032878]; regulation of Notch signaling pathway [GO:0008593]	GO:0005096; GO:0005737; GO:0005886; GO:0008593; GO:0017137; GO:0019905; GO:0030864; GO:0030866; GO:0032878; GO:0045159; GO:0051294	cortical actin cytoskeleton [GO:0030864]; cytoplasm [GO:0005737]; plasma membrane [GO:0005886]	GTPase activator activity [GO:0005096]; myosin II binding [GO:0045159]; Rab GTPase binding [GO:0017137]; syntaxin binding [GO:0019905]	cortical actin cytoskeleton organization [GO:0030866]; establishment of spindle orientation [GO:0051294]; regulation of establishment or maintenance of cell polarity [GO:0032878]; regulation of Notch signaling pathway [GO:0008593]
+H2ZMJ4					

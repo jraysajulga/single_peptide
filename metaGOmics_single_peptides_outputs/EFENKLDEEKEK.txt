@@ -1,0 +1,72 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Tue Sep 17 22:20:28 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0006725	biological_process	cellular aromatic compound metabolic process	10	10	1.0
+GO:0140098	molecular_function	catalytic activity, acting on RNA	10	10	1.0
+GO:0010629	biological_process	negative regulation of gene expression	10	10	1.0
+GO:0044446	cellular_component	intracellular organelle part	10	10	1.0
+GO:0034655	biological_process	nucleobase-containing compound catabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0016070	biological_process	RNA metabolic process	10	10	1.0
+GO:0016071	biological_process	mRNA metabolic process	10	10	1.0
+GO:0016020	cellular_component	membrane	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0043226	cellular_component	organelle	10	10	1.0
+GO:0019222	biological_process	regulation of metabolic process	10	10	1.0
+GO:0009056	biological_process	catabolic process	10	10	1.0
+GO:0003676	molecular_function	nucleic acid binding	10	10	1.0
+GO:0009057	biological_process	macromolecule catabolic process	10	10	1.0
+GO:0043228	cellular_component	non-membrane-bounded organelle	10	10	1.0
+GO:0043229	cellular_component	intracellular organelle	10	10	1.0
+GO:0043232	cellular_component	intracellular non-membrane-bounded organelle	10	10	1.0
+GO:1901575	biological_process	organic substance catabolic process	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0009892	biological_process	negative regulation of metabolic process	10	10	1.0
+GO:0048519	biological_process	negative regulation of biological process	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0090304	biological_process	nucleic acid metabolic process	10	10	1.0
+GO:0090305	biological_process	nucleic acid phosphodiester bond hydrolysis	10	10	1.0
+GO:0005886	cellular_component	plasma membrane	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0050789	biological_process	regulation of biological process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0006401	biological_process	RNA catabolic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0006402	biological_process	mRNA catabolic process	10	10	1.0
+GO:0046700	biological_process	heterocycle catabolic process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0003723	molecular_function	RNA binding	10	10	1.0
+GO:0044248	biological_process	cellular catabolic process	10	10	1.0
+GO:0004518	molecular_function	nuclease activity	10	10	1.0
+GO:0004519	molecular_function	endonuclease activity	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:0004521	molecular_function	endoribonuclease activity	10	10	1.0
+GO:0005730	cellular_component	nucleolus	10	10	1.0
+GO:1901361	biological_process	organic cyclic compound catabolic process	10	10	1.0
+GO:0044260	biological_process	cellular macromolecule metabolic process	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0006139	biological_process	nucleobase-containing compound metabolic process	10	10	1.0
+GO:0065007	biological_process	biological regulation	10	10	1.0
+GO:0044265	biological_process	cellular macromolecule catabolic process	10	10	1.0
+GO:0016787	molecular_function	hydrolase activity	10	10	1.0
+GO:0044270	biological_process	cellular nitrogen compound catabolic process	10	10	1.0
+GO:0016788	molecular_function	hydrolase activity, acting on ester bonds	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:0019439	biological_process	aromatic compound catabolic process	10	10	1.0
+GO:0004540	molecular_function	ribonuclease activity	10	10	1.0
+GO:0043170	biological_process	macromolecule metabolic process	10	10	1.0
+GO:0010605	biological_process	negative regulation of macromolecule metabolic process	10	10	1.0
+GO:0044422	cellular_component	organelle part	10	10	1.0
+GO:0010468	biological_process	regulation of gene expression	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0044428	cellular_component	nuclear part	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:0090501	biological_process	RNA phosphodiester bond hydrolysis	10	10	1.0
+GO:0090502	biological_process	RNA phosphodiester bond hydrolysis, endonucleolytic	10	10	1.0
+GO:0060255	biological_process	regulation of macromolecule metabolic process	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

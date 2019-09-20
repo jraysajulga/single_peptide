@@ -1,0 +1,10 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Tue Sep 17 22:21:18 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+unknownprc	biological_process	unknown biological process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+unknownfun	molecular_function	unknown molecular function	10	10	1.0
+unknowncmp	cellular_component	unknown cellular component	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0

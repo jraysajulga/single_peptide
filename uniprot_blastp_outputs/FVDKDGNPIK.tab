@@ -1,0 +1,51 @@
+Entry	Gene ontology (GO)	Gene ontology IDs	Gene ontology (cellular component)	Gene ontology (molecular function)	Gene ontology (biological process)
+A0A1H4BJJ7	ribonuclease activity [GO:0004540]; RNA binding [GO:0003723]; RNA processing [GO:0006396]	GO:0003723; GO:0004540; GO:0006396		ribonuclease activity [GO:0004540]; RNA binding [GO:0003723]	RNA processing [GO:0006396]
+A0A2M9U4V2	ribonuclease activity [GO:0004540]; RNA binding [GO:0003723]; RNA processing [GO:0006396]	GO:0003723; GO:0004540; GO:0006396		ribonuclease activity [GO:0004540]; RNA binding [GO:0003723]	RNA processing [GO:0006396]
+A0A2D3NW14					
+A0A095YLP5					
+K1GTG6					
+D6LJ40					
+A0A2G9EF60					
+A0A2G9EDU4					
+A0A0E2V4K0					
+A0A4Q2KZ75					
+A0A017H665					
+A0A064AGP7					
+A0A2P1RLC8					
+A0A170MUT9					
+J8SQX9					
+A0A2X3MC13	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+A0A133NIM8					
+A0A0E2V5J4					
+A0A4Q2KYG5					
+A0A064A219					
+H1D933					
+A0A162J586					
+A0A2P1RJ51					
+J6H6G5					
+E5BFW0					
+A0A017H2Z1					
+A0A2X3KFD0	integral component of membrane [GO:0016021]	GO:0016021	integral component of membrane [GO:0016021]		
+A0A0B4EIC0					
+H1DAE6					
+A0A2P1GMQ9	host cell membrane [GO:0033644]; integral component of membrane [GO:0016021]; viral capsid [GO:0019028]; viral envelope [GO:0019031]; virion membrane [GO:0055036]; ATP binding [GO:0005524]; cysteine-type endopeptidase activity [GO:0004197]; RNA binding [GO:0003723]; RNA helicase activity [GO:0003724]; RNA-directed 5'-3' RNA polymerase activity [GO:0003968]; serine-type endopeptidase activity [GO:0004252]; structural molecule activity [GO:0005198]; induction by virus of host autophagy [GO:0039520]; suppression by virus of host innate immune response [GO:0039503]; transformation of host cell by virus [GO:0019087]; viral entry into host cell [GO:0046718]; viral RNA genome replication [GO:0039694]; virion attachment to host cell [GO:0019062]	GO:0003723; GO:0003724; GO:0003968; GO:0004197; GO:0004252; GO:0005198; GO:0005524; GO:0016021; GO:0019028; GO:0019031; GO:0019062; GO:0019087; GO:0033644; GO:0039503; GO:0039520; GO:0039694; GO:0046718; GO:0055036	host cell membrane [GO:0033644]; integral component of membrane [GO:0016021]; viral capsid [GO:0019028]; viral envelope [GO:0019031]; virion membrane [GO:0055036]	ATP binding [GO:0005524]; cysteine-type endopeptidase activity [GO:0004197]; RNA binding [GO:0003723]; RNA-directed 5'-3' RNA polymerase activity [GO:0003968]; RNA helicase activity [GO:0003724]; serine-type endopeptidase activity [GO:0004252]; structural molecule activity [GO:0005198]	induction by virus of host autophagy [GO:0039520]; suppression by virus of host innate immune response [GO:0039503]; transformation of host cell by virus [GO:0019087]; viral entry into host cell [GO:0046718]; viral RNA genome replication [GO:0039694]; virion attachment to host cell [GO:0019062]
+A0A1I3IDF6	oxidoreductase activity [GO:0016491]	GO:0016491		oxidoreductase activity [GO:0016491]	
+A0A3G2K9Y9					
+A0A3G3M483					
+A0A3G3M4H7					
+A0A3G2KIL7					
+A0A3G3M4X5					
+A0A1M7HCC2					
+A0A219ABD1					
+A0A2S4ZWE9					
+A0A0J1FUQ4					
+A0A3G2TB54					
+A0A4V2KEG3					
+A0A1X1DCP5					
+A0A1I6ID04	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A2G3EAB5	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A1G5B9X0	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A1I3EMD7	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A2G3DV81	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A1G6AJH8	cytoplasm [GO:0005737]; GTP binding [GO:0005525]; GTPase activity [GO:0003924]; translation initiation factor activity [GO:0003743]	GO:0003743; GO:0003924; GO:0005525; GO:0005737	cytoplasm [GO:0005737]	GTPase activity [GO:0003924]; GTP binding [GO:0005525]; translation initiation factor activity [GO:0003743]	
+A0A4V3GI31					

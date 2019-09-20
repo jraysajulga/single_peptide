@@ -1,0 +1,31 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Tue Sep 17 22:24:49 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0010556	biological_process	regulation of macromolecule biosynthetic process	10	10	1.0
+unknowncmp	cellular_component	unknown cellular component	10	10	1.0
+GO:0050789	biological_process	regulation of biological process	10	10	1.0
+GO:0051252	biological_process	regulation of RNA metabolic process	10	10	1.0
+GO:0050794	biological_process	regulation of cellular process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0051171	biological_process	regulation of nitrogen compound metabolic process	10	10	1.0
+GO:0019219	biological_process	regulation of nucleobase-containing compound metabolic process	10	10	1.0
+GO:0080090	biological_process	regulation of primary metabolic process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0019222	biological_process	regulation of metabolic process	10	10	1.0
+GO:0065007	biological_process	biological regulation	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:2001141	biological_process	regulation of RNA biosynthetic process	10	10	1.0
+GO:0003676	molecular_function	nucleic acid binding	10	10	1.0
+GO:0003677	molecular_function	DNA binding	10	10	1.0
+GO:1903506	biological_process	regulation of nucleic acid-templated transcription	10	10	1.0
+GO:0006355	biological_process	regulation of transcription, DNA-templated	10	10	1.0
+GO:0031323	biological_process	regulation of cellular metabolic process	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:2000112	biological_process	regulation of cellular macromolecule biosynthetic process	10	10	1.0
+GO:0010468	biological_process	regulation of gene expression	10	10	1.0
+GO:0031326	biological_process	regulation of cellular biosynthetic process	10	10	1.0
+GO:0009889	biological_process	regulation of biosynthetic process	10	10	1.0
+GO:0060255	biological_process	regulation of macromolecule metabolic process	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

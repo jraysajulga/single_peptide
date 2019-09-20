@@ -1,0 +1,14 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Tue Sep 17 22:27:36 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+unknownprc	biological_process	unknown biological process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+unknowncmp	cellular_component	unknown cellular component	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0003676	molecular_function	nucleic acid binding	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0003677	molecular_function	DNA binding	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0
