@@ -1,0 +1,55 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:14:26 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0044444	cellular_component	cytoplasmic part	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0043231	cellular_component	intracellular membrane-bounded organelle	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0015928	molecular_function	fucosidase activity	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0043226	cellular_component	organelle	10	10	1.0
+GO:0009056	biological_process	catabolic process	10	10	1.0
+GO:0043227	cellular_component	membrane-bounded organelle	10	10	1.0
+GO:0009057	biological_process	macromolecule catabolic process	10	10	1.0
+GO:0043229	cellular_component	intracellular organelle	10	10	1.0
+GO:1901564	biological_process	organonitrogen compound metabolic process	10	10	1.0
+GO:1901565	biological_process	organonitrogen compound catabolic process	10	10	1.0
+GO:1901575	biological_process	organic substance catabolic process	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0005576	cellular_component	extracellular region	10	10	1.0
+GO:0005975	biological_process	carbohydrate metabolic process	10	10	1.0
+GO:0005764	cellular_component	lysosome	10	10	1.0
+GO:0006516	biological_process	glycoprotein catabolic process	10	10	1.0
+GO:0048046	cellular_component	apoplast	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0019538	biological_process	protein metabolic process	10	10	1.0
+GO:0009100	biological_process	glycoprotein metabolic process	10	10	1.0
+GO:0005996	biological_process	monosaccharide metabolic process	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0030163	biological_process	protein catabolic process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0006004	biological_process	fucose metabolic process	10	10	1.0
+GO:0044248	biological_process	cellular catabolic process	10	10	1.0
+GO:0016137	biological_process	glycoside metabolic process	10	10	1.0
+GO:0016139	biological_process	glycoside catabolic process	10	10	1.0
+GO:0044260	biological_process	cellular macromolecule metabolic process	10	10	1.0
+GO:0044265	biological_process	cellular macromolecule catabolic process	10	10	1.0
+GO:0016787	molecular_function	hydrolase activity	10	10	1.0
+GO:0005773	cellular_component	vacuole	10	10	1.0
+GO:0000323	cellular_component	lytic vacuole	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:0016798	molecular_function	hydrolase activity, acting on glycosyl bonds	10	10	1.0
+GO:0044281	biological_process	small molecule metabolic process	10	10	1.0
+GO:0043170	biological_process	macromolecule metabolic process	10	10	1.0
+GO:0004553	molecular_function	hydrolase activity, hydrolyzing O-glycosyl compounds	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0004560	molecular_function	alpha-L-fucosidase activity	10	10	1.0
+GO:0019318	biological_process	hexose metabolic process	10	10	1.0
+GO:1901657	biological_process	glycosyl compound metabolic process	10	10	1.0
+GO:1901658	biological_process	glycosyl compound catabolic process	10	10	1.0
+GO:1901135	biological_process	carbohydrate derivative metabolic process	10	10	1.0
+GO:1901136	biological_process	carbohydrate derivative catabolic process	10	10	1.0

@@ -1,0 +1,142 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:32:38 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0140098	molecular_function	catalytic activity, acting on RNA	10	10	1.0
+GO:0006725	biological_process	cellular aromatic compound metabolic process	10	10	1.0
+GO:0140101	molecular_function	catalytic activity, acting on a tRNA	10	10	1.0
+GO:0032553	molecular_function	ribonucleotide binding	10	10	1.0
+GO:0010629	biological_process	negative regulation of gene expression	10	10	1.0
+GO:0032555	molecular_function	purine ribonucleotide binding	10	10	1.0
+GO:0019752	biological_process	carboxylic acid metabolic process	10	10	1.0
+GO:0032559	molecular_function	adenyl ribonucleotide binding	10	10	1.0
+GO:0005737	cellular_component	cytoplasm	10	10	1.0
+GO:0034660	biological_process	ncRNA metabolic process	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0016070	biological_process	RNA metabolic process	10	10	1.0
+GO:0019219	biological_process	regulation of nucleobase-containing compound metabolic process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0019222	biological_process	regulation of metabolic process	10	10	1.0
+GO:0003676	molecular_function	nucleic acid binding	10	10	1.0
+GO:0009058	biological_process	biosynthetic process	10	10	1.0
+GO:0009059	biological_process	macromolecule biosynthetic process	10	10	1.0
+GO:0052689	molecular_function	carboxylic ester hydrolase activity	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0003700	molecular_function	DNA-binding transcription factor activity	10	10	1.0
+GO:0006518	biological_process	peptide metabolic process	10	10	1.0
+GO:0006520	biological_process	cellular amino acid metabolic process	10	10	1.0
+GO:0009889	biological_process	regulation of biosynthetic process	10	10	1.0
+GO:0009890	biological_process	negative regulation of biosynthetic process	10	10	1.0
+GO:0009892	biological_process	negative regulation of metabolic process	10	10	1.0
+GO:0008270	molecular_function	zinc ion binding	10	10	1.0
+GO:0019538	biological_process	protein metabolic process	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0050789	biological_process	regulation of biological process	10	10	1.0
+GO:0000049	molecular_function	tRNA binding	10	10	1.0
+GO:0050794	biological_process	regulation of cellular process	10	10	1.0
+GO:0017076	molecular_function	purine nucleotide binding	10	10	1.0
+GO:0002161	molecular_function	aminoacyl-tRNA editing activity	10	10	1.0
+GO:0003723	molecular_function	RNA binding	10	10	1.0
+GO:0106074	biological_process	aminoacyl-tRNA metabolism involved in translational fidelity	10	10	1.0
+GO:0001130	molecular_function	bacterial-type RNA polymerase transcription factor activity, sequence-specific DNA binding	10	10	1.0
+GO:0034470	biological_process	ncRNA processing	10	10	1.0
+GO:0004812	molecular_function	aminoacyl-tRNA ligase activity	10	10	1.0
+GO:0004813	molecular_function	alanine-tRNA ligase activity	10	10	1.0
+GO:0065007	biological_process	biological regulation	10	10	1.0
+GO:0065008	biological_process	regulation of biological quality	10	10	1.0
+GO:2001141	biological_process	regulation of RNA biosynthetic process	10	10	1.0
+GO:0016787	molecular_function	hydrolase activity	10	10	1.0
+GO:0016788	molecular_function	hydrolase activity, acting on ester bonds	10	10	1.0
+GO:0008033	biological_process	tRNA processing	10	10	1.0
+GO:0031323	biological_process	regulation of cellular metabolic process	10	10	1.0
+GO:2000112	biological_process	regulation of cellular macromolecule biosynthetic process	10	10	1.0
+GO:0031324	biological_process	negative regulation of cellular metabolic process	10	10	1.0
+GO:2000113	biological_process	negative regulation of cellular macromolecule biosynthetic process	10	10	1.0
+GO:0010468	biological_process	regulation of gene expression	10	10	1.0
+GO:0031326	biological_process	regulation of cellular biosynthetic process	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0043603	biological_process	cellular amide metabolic process	10	10	1.0
+GO:0031327	biological_process	negative regulation of cellular biosynthetic process	10	10	1.0
+GO:0043604	biological_process	amide biosynthetic process	10	10	1.0
+GO:0002196	molecular_function	Ser-tRNA(Ala) hydrolase activity	10	10	1.0
+GO:0045934	biological_process	negative regulation of nucleobase-containing compound metabolic process	10	10	1.0
+GO:1901265	molecular_function	nucleoside phosphate binding	10	10	1.0
+GO:0043038	biological_process	amino acid activation	10	10	1.0
+GO:0060255	biological_process	regulation of macromolecule metabolic process	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0
+GO:0043039	biological_process	tRNA aminoacylation	10	10	1.0
+GO:0036094	molecular_function	small molecule binding	10	10	1.0
+GO:0043043	biological_process	peptide biosynthetic process	10	10	1.0
+GO:0044444	cellular_component	cytoplasmic part	10	10	1.0
+GO:0046872	molecular_function	metal ion binding	10	10	1.0
+GO:0051171	biological_process	regulation of nitrogen compound metabolic process	10	10	1.0
+GO:0051172	biological_process	negative regulation of nitrogen compound metabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0016020	cellular_component	membrane	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0009451	biological_process	RNA modification	10	10	1.0
+GO:0005524	molecular_function	ATP binding	10	10	1.0
+GO:0042802	molecular_function	identical protein binding	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0080090	biological_process	regulation of primary metabolic process	10	10	1.0
+GO:0045892	biological_process	negative regulation of transcription, DNA-templated	10	10	1.0
+GO:0006082	biological_process	organic acid metabolic process	10	10	1.0
+GO:0001217	molecular_function	bacterial-type RNA polymerase transcriptional repressor activity, sequence-specific DNA binding	10	10	1.0
+GO:1901564	biological_process	organonitrogen compound metabolic process	10	10	1.0
+GO:1901566	biological_process	organonitrogen compound biosynthetic process	10	10	1.0
+GO:0030554	molecular_function	adenyl nucleotide binding	10	10	1.0
+GO:0006355	biological_process	regulation of transcription, DNA-templated	10	10	1.0
+GO:1901576	biological_process	organic substance biosynthetic process	10	10	1.0
+GO:0016874	molecular_function	ligase activity	10	10	1.0
+GO:0016875	molecular_function	ligase activity, forming carbon-oxygen bonds	10	10	1.0
+GO:0005829	cellular_component	cytosol	10	10	1.0
+GO:0016597	molecular_function	amino acid binding	10	10	1.0
+GO:0043412	biological_process	macromolecule modification	10	10	1.0
+GO:0000166	molecular_function	nucleotide binding	10	10	1.0
+GO:0031406	molecular_function	carboxylic acid binding	10	10	1.0
+GO:0048519	biological_process	negative regulation of biological process	10	10	1.0
+GO:0010556	biological_process	regulation of macromolecule biosynthetic process	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0048523	biological_process	negative regulation of cellular process	10	10	1.0
+GO:0010558	biological_process	negative regulation of macromolecule biosynthetic process	10	10	1.0
+GO:0090304	biological_process	nucleic acid metabolic process	10	10	1.0
+GO:0035639	molecular_function	purine ribonucleoside triphosphate binding	10	10	1.0
+GO:0008144	molecular_function	drug binding	10	10	1.0
+GO:0006396	biological_process	RNA processing	10	10	1.0
+GO:1902679	biological_process	negative regulation of RNA biosynthetic process	10	10	1.0
+GO:0006399	biological_process	tRNA metabolic process	10	10	1.0
+GO:0097367	molecular_function	carbohydrate derivative binding	10	10	1.0
+GO:0006400	biological_process	tRNA modification	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0043436	biological_process	oxoacid metabolic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0051252	biological_process	regulation of RNA metabolic process	10	10	1.0
+GO:0051253	biological_process	negative regulation of RNA metabolic process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0044249	biological_process	cellular biosynthetic process	10	10	1.0
+GO:0006412	biological_process	translation	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:0044260	biological_process	cellular macromolecule metabolic process	10	10	1.0
+GO:0006418	biological_process	tRNA aminoacylation for protein translation	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0006419	biological_process	alanyl-tRNA aminoacylation	10	10	1.0
+GO:0006139	biological_process	nucleobase-containing compound metabolic process	10	10	1.0
+GO:0044267	biological_process	cellular protein metabolic process	10	10	1.0
+GO:0140110	molecular_function	transcription regulator activity	10	10	1.0
+GO:0044271	biological_process	cellular nitrogen compound biosynthetic process	10	10	1.0
+GO:1903506	biological_process	regulation of nucleic acid-templated transcription	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:1903507	biological_process	negative regulation of nucleic acid-templated transcription	10	10	1.0
+GO:0043167	molecular_function	ion binding	10	10	1.0
+GO:0005515	molecular_function	protein binding	10	10	1.0
+GO:0043168	molecular_function	anion binding	10	10	1.0
+GO:0044281	biological_process	small molecule metabolic process	10	10	1.0
+GO:0043169	molecular_function	cation binding	10	10	1.0
+GO:0043170	biological_process	macromolecule metabolic process	10	10	1.0
+GO:0010605	biological_process	negative regulation of macromolecule metabolic process	10	10	1.0
+GO:0043177	molecular_function	organic acid binding	10	10	1.0
+GO:0006450	biological_process	regulation of translational fidelity	10	10	1.0
+GO:0046914	molecular_function	transition metal ion binding	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:0034645	biological_process	cellular macromolecule biosynthetic process	10	10	1.0

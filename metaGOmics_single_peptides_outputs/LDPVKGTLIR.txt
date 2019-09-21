@@ -1,0 +1,33 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:13:10 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0055114	biological_process	oxidation-reduction process	10	10	1.0
+GO:0036094	molecular_function	small molecule binding	10	10	1.0
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0016491	molecular_function	oxidoreductase activity	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0071949	molecular_function	FAD binding	10	10	1.0
+GO:0009055	molecular_function	electron transfer activity	10	10	1.0
+GO:0022900	biological_process	electron transport chain	10	10	1.0
+GO:0050660	molecular_function	flavin adenine dinucleotide binding	10	10	1.0
+GO:0005737	cellular_component	cytoplasm	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0050662	molecular_function	coenzyme binding	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0016627	molecular_function	oxidoreductase activity, acting on the CH-CH group of donors	10	10	1.0
+GO:0016628	molecular_function	oxidoreductase activity, acting on the CH-CH group of donors, NAD or NADP as acceptor	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0006091	biological_process	generation of precursor metabolites and energy	10	10	1.0
+GO:0043167	molecular_function	ion binding	10	10	1.0
+GO:0043168	molecular_function	anion binding	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0048037	molecular_function	cofactor binding	10	10	1.0
+GO:0000166	molecular_function	nucleotide binding	10	10	1.0
+GO:1901265	molecular_function	nucleoside phosphate binding	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

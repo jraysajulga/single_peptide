@@ -1,0 +1,17 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:23:25 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+unknownprc	biological_process	unknown biological process	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+unknowncmp	cellular_component	unknown cellular component	10	10	1.0
+GO:0043167	molecular_function	ion binding	10	10	1.0
+GO:0046872	molecular_function	metal ion binding	10	10	1.0
+GO:0043169	molecular_function	cation binding	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0004802	molecular_function	transketolase activity	10	10	1.0
+GO:0016740	molecular_function	transferase activity	10	10	1.0
+GO:0016744	molecular_function	transferase activity, transferring aldehyde or ketonic groups	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

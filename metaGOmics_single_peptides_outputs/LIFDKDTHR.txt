@@ -1,0 +1,201 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:17:00 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0006725	biological_process	cellular aromatic compound metabolic process	10	10	1.0
+GO:1901137	biological_process	carbohydrate derivative biosynthetic process	10	10	1.0
+GO:0006732	biological_process	coenzyme metabolic process	10	10	1.0
+GO:0034654	biological_process	nucleobase-containing compound biosynthetic process	10	10	1.0
+GO:0034655	biological_process	nucleobase-containing compound catabolic process	10	10	1.0
+GO:0006733	biological_process	oxidoreduction coenzyme metabolic process	10	10	1.0
+GO:0046939	biological_process	nucleotide phosphorylation	10	10	1.0
+GO:0005737	cellular_component	cytoplasm	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0006753	biological_process	nucleoside phosphate metabolic process	10	10	1.0
+GO:0006754	biological_process	ATP biosynthetic process	10	10	1.0
+GO:0006757	biological_process	ATP generation from ADP	10	10	1.0
+GO:0015036	molecular_function	disulfide oxidoreductase activity	10	10	1.0
+GO:0048037	molecular_function	cofactor binding	10	10	1.0
+GO:0046390	biological_process	ribose phosphate biosynthetic process	10	10	1.0
+GO:0006793	biological_process	phosphorus metabolic process	10	10	1.0
+GO:0045254	cellular_component	pyruvate dehydrogenase complex	10	10	1.0
+GO:0046394	biological_process	carboxylic acid biosynthetic process	10	10	1.0
+GO:0046395	biological_process	carboxylic acid catabolic process	10	10	1.0
+GO:0006796	biological_process	phosphate-containing compound metabolic process	10	10	1.0
+GO:0008270	molecular_function	zinc ion binding	10	10	1.0
+GO:0005886	cellular_component	plasma membrane	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0050789	biological_process	regulation of biological process	10	10	1.0
+GO:0009055	molecular_function	electron transfer activity	10	10	1.0
+GO:0050794	biological_process	regulation of cellular process	10	10	1.0
+GO:0055086	biological_process	nucleobase-containing small molecule metabolic process	10	10	1.0
+GO:0065007	biological_process	biological regulation	10	10	1.0
+GO:0065008	biological_process	regulation of biological quality	10	10	1.0
+GO:0046434	biological_process	organophosphate catabolic process	10	10	1.0
+GO:0043603	biological_process	cellular amide metabolic process	10	10	1.0
+GO:0043604	biological_process	amide biosynthetic process	10	10	1.0
+GO:1901265	molecular_function	nucleoside phosphate binding	10	10	1.0
+GO:0071616	biological_process	acyl-CoA biosynthetic process	10	10	1.0
+GO:0017144	biological_process	drug metabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0050896	biological_process	response to stimulus	10	10	1.0
+GO:1901292	biological_process	nucleoside phosphate catabolic process	10	10	1.0
+GO:1901293	biological_process	nucleoside phosphate biosynthetic process	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0043648	biological_process	dicarboxylic acid metabolic process	10	10	1.0
+GO:0046496	biological_process	nicotinamide nucleotide metabolic process	10	10	1.0
+GO:0019637	biological_process	organophosphate metabolic process	10	10	1.0
+GO:0005829	cellular_component	cytosol	10	10	1.0
+GO:0000166	molecular_function	nucleotide binding	10	10	1.0
+GO:0035383	biological_process	thioester metabolic process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0035384	biological_process	thioester biosynthetic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0006950	biological_process	response to stress	10	10	1.0
+GO:0046031	biological_process	ADP metabolic process	10	10	1.0
+GO:0046034	biological_process	ATP metabolic process	10	10	1.0
+GO:0044248	biological_process	cellular catabolic process	10	10	1.0
+GO:0044249	biological_process	cellular biosynthetic process	10	10	1.0
+GO:0019693	biological_process	ribose phosphate metabolic process	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:1901361	biological_process	organic cyclic compound catabolic process	10	10	1.0
+GO:1901362	biological_process	organic cyclic compound biosynthetic process	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0044270	biological_process	cellular nitrogen compound catabolic process	10	10	1.0
+GO:0044271	biological_process	cellular nitrogen compound biosynthetic process	10	10	1.0
+GO:0006979	biological_process	response to oxidative stress	10	10	1.0
+GO:0044272	biological_process	sulfur compound biosynthetic process	10	10	1.0
+GO:0032787	biological_process	monocarboxylic acid metabolic process	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:0043167	molecular_function	ion binding	10	10	1.0
+GO:0005515	molecular_function	protein binding	10	10	1.0
+GO:0044281	biological_process	small molecule metabolic process	10	10	1.0
+GO:0043168	molecular_function	anion binding	10	10	1.0
+GO:0042592	biological_process	homeostatic process	10	10	1.0
+GO:0043169	molecular_function	cation binding	10	10	1.0
+GO:0044282	biological_process	small molecule catabolic process	10	10	1.0
+GO:0044283	biological_process	small molecule biosynthetic process	10	10	1.0
+GO:0004148	molecular_function	dihydrolipoyl dehydrogenase activity	10	10	1.0
+GO:0019725	biological_process	cellular homeostasis	10	10	1.0
+GO:0016667	molecular_function	oxidoreductase activity, acting on a sulfur group of donors	10	10	1.0
+GO:0016668	molecular_function	oxidoreductase activity, acting on a sulfur group of donors, NAD(P) as acceptor	10	10	1.0
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0033865	biological_process	nucleoside bisphosphate metabolic process	10	10	1.0
+GO:0033866	biological_process	nucleoside bisphosphate biosynthetic process	10	10	1.0
+GO:0016052	biological_process	carbohydrate catabolic process	10	10	1.0
+GO:0016053	biological_process	organic acid biosynthetic process	10	10	1.0
+GO:0016054	biological_process	organic acid catabolic process	10	10	1.0
+GO:0019752	biological_process	carboxylic acid metabolic process	10	10	1.0
+GO:0033875	biological_process	ribonucleoside bisphosphate metabolic process	10	10	1.0
+GO:1990204	cellular_component	oxidoreductase complex	10	10	1.0
+GO:0034404	biological_process	nucleobase-containing small molecule biosynthetic process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0009056	biological_process	catabolic process	10	10	1.0
+GO:0009058	biological_process	biosynthetic process	10	10	1.0
+GO:1902494	cellular_component	catalytic complex	10	10	1.0
+GO:0009063	biological_process	cellular amino acid catabolic process	10	10	1.0
+GO:0009069	biological_process	serine family amino acid metabolic process	10	10	1.0
+GO:0090407	biological_process	organophosphate biosynthetic process	10	10	1.0
+GO:0009071	biological_process	serine family amino acid catabolic process	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0005975	biological_process	carbohydrate metabolic process	10	10	1.0
+GO:0006520	biological_process	cellular amino acid metabolic process	10	10	1.0
+GO:0018130	biological_process	heterocycle biosynthetic process	10	10	1.0
+GO:0072330	biological_process	monocarboxylic acid biosynthetic process	10	10	1.0
+GO:0046700	biological_process	heterocycle catabolic process	10	10	1.0
+GO:0009108	biological_process	coenzyme biosynthetic process	10	10	1.0
+GO:0006544	biological_process	glycine metabolic process	10	10	1.0
+GO:0006546	biological_process	glycine catabolic process	10	10	1.0
+GO:0009117	biological_process	nucleotide metabolic process	10	10	1.0
+GO:0009123	biological_process	nucleoside monophosphate metabolic process	10	10	1.0
+GO:0009124	biological_process	nucleoside monophosphate biosynthetic process	10	10	1.0
+GO:0009126	biological_process	purine nucleoside monophosphate metabolic process	10	10	1.0
+GO:0009127	biological_process	purine nucleoside monophosphate biosynthetic process	10	10	1.0
+GO:0009132	biological_process	nucleoside diphosphate metabolic process	10	10	1.0
+GO:0009135	biological_process	purine nucleoside diphosphate metabolic process	10	10	1.0
+GO:0042133	biological_process	neurotransmitter metabolic process	10	10	1.0
+GO:0042737	biological_process	drug catabolic process	10	10	1.0
+GO:0042135	biological_process	neurotransmitter catabolic process	10	10	1.0
+GO:0009141	biological_process	nucleoside triphosphate metabolic process	10	10	1.0
+GO:0009142	biological_process	nucleoside triphosphate biosynthetic process	10	10	1.0
+GO:0009144	biological_process	purine nucleoside triphosphate metabolic process	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0009145	biological_process	purine nucleoside triphosphate biosynthetic process	10	10	1.0
+GO:0009150	biological_process	purine ribonucleotide metabolic process	10	10	1.0
+GO:0009152	biological_process	purine ribonucleotide biosynthetic process	10	10	1.0
+GO:0009156	biological_process	ribonucleoside monophosphate biosynthetic process	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0
+GO:0036094	molecular_function	small molecule binding	10	10	1.0
+GO:0009161	biological_process	ribonucleoside monophosphate metabolic process	10	10	1.0
+GO:0044444	cellular_component	cytoplasmic part	10	10	1.0
+GO:0009165	biological_process	nucleotide biosynthetic process	10	10	1.0
+GO:0044445	cellular_component	cytosolic part	10	10	1.0
+GO:0009166	biological_process	nucleotide catabolic process	10	10	1.0
+GO:0009167	biological_process	purine ribonucleoside monophosphate metabolic process	10	10	1.0
+GO:0009168	biological_process	purine ribonucleoside monophosphate biosynthetic process	10	10	1.0
+GO:0046872	molecular_function	metal ion binding	10	10	1.0
+GO:0009179	biological_process	purine ribonucleoside diphosphate metabolic process	10	10	1.0
+GO:0016020	cellular_component	membrane	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0009185	biological_process	ribonucleoside diphosphate metabolic process	10	10	1.0
+GO:0042802	molecular_function	identical protein binding	10	10	1.0
+GO:0051186	biological_process	cofactor metabolic process	10	10	1.0
+GO:0019359	biological_process	nicotinamide nucleotide biosynthetic process	10	10	1.0
+GO:0032991	cellular_component	protein-containing complex	10	10	1.0
+GO:0051188	biological_process	cofactor biosynthetic process	10	10	1.0
+GO:0006082	biological_process	organic acid metabolic process	10	10	1.0
+GO:0019362	biological_process	pyridine nucleotide metabolic process	10	10	1.0
+GO:0019363	biological_process	pyridine nucleotide biosynthetic process	10	10	1.0
+GO:0006084	biological_process	acetyl-CoA metabolic process	10	10	1.0
+GO:1901564	biological_process	organonitrogen compound metabolic process	10	10	1.0
+GO:0006085	biological_process	acetyl-CoA biosynthetic process	10	10	1.0
+GO:1901565	biological_process	organonitrogen compound catabolic process	10	10	1.0
+GO:0006086	biological_process	acetyl-CoA biosynthetic process from pyruvate	10	10	1.0
+GO:1901566	biological_process	organonitrogen compound biosynthetic process	10	10	1.0
+GO:0006090	biological_process	pyruvate metabolic process	10	10	1.0
+GO:0006091	biological_process	generation of precursor metabolites and energy	10	10	1.0
+GO:0009199	biological_process	ribonucleoside triphosphate metabolic process	10	10	1.0
+GO:0006096	biological_process	glycolytic process	10	10	1.0
+GO:0009201	biological_process	ribonucleoside triphosphate biosynthetic process	10	10	1.0
+GO:0006637	biological_process	acyl-CoA metabolic process	10	10	1.0
+GO:1901575	biological_process	organic substance catabolic process	10	10	1.0
+GO:1901576	biological_process	organic substance biosynthetic process	10	10	1.0
+GO:0009205	biological_process	purine ribonucleoside triphosphate metabolic process	10	10	1.0
+GO:0009206	biological_process	purine ribonucleoside triphosphate biosynthetic process	10	10	1.0
+GO:0034030	biological_process	ribonucleoside bisphosphate biosynthetic process	10	10	1.0
+GO:0006103	biological_process	2-oxoglutarate metabolic process	10	10	1.0
+GO:0034032	biological_process	purine nucleoside bisphosphate metabolic process	10	10	1.0
+GO:0034033	biological_process	purine nucleoside bisphosphate biosynthetic process	10	10	1.0
+GO:0055114	biological_process	oxidation-reduction process	10	10	1.0
+GO:0016491	molecular_function	oxidoreductase activity	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:1901605	biological_process	alpha-amino acid metabolic process	10	10	1.0
+GO:1901606	biological_process	alpha-amino acid catabolic process	10	10	1.0
+GO:0045454	biological_process	cell redox homeostasis	10	10	1.0
+GO:0019464	biological_process	glycine decarboxylation via glycine cleavage system	10	10	1.0
+GO:0022900	biological_process	electron transport chain	10	10	1.0
+GO:0050660	molecular_function	flavin adenine dinucleotide binding	10	10	1.0
+GO:0043436	biological_process	oxoacid metabolic process	10	10	1.0
+GO:0050662	molecular_function	coenzyme binding	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0001505	biological_process	regulation of neurotransmitter levels	10	10	1.0
+GO:0072521	biological_process	purine-containing compound metabolic process	10	10	1.0
+GO:0006139	biological_process	nucleobase-containing compound metabolic process	10	10	1.0
+GO:0072522	biological_process	purine-containing compound biosynthetic process	10	10	1.0
+GO:0009259	biological_process	ribonucleotide metabolic process	10	10	1.0
+GO:0072524	biological_process	pyridine-containing compound metabolic process	10	10	1.0
+GO:0009260	biological_process	ribonucleotide biosynthetic process	10	10	1.0
+GO:0072525	biological_process	pyridine-containing compound biosynthetic process	10	10	1.0
+GO:0042866	biological_process	pyruvate biosynthetic process	10	10	1.0
+GO:0016310	biological_process	phosphorylation	10	10	1.0
+GO:0006163	biological_process	purine nucleotide metabolic process	10	10	1.0
+GO:0019438	biological_process	aromatic compound biosynthetic process	10	10	1.0
+GO:0019439	biological_process	aromatic compound catabolic process	10	10	1.0
+GO:0016651	molecular_function	oxidoreductase activity, acting on NAD(P)H	10	10	1.0
+GO:0006790	biological_process	sulfur compound metabolic process	10	10	1.0
+GO:0006164	biological_process	purine nucleotide biosynthetic process	10	10	1.0
+GO:0045250	cellular_component	cytosolic pyruvate dehydrogenase complex	10	10	1.0
+GO:0006165	biological_process	nucleoside diphosphate phosphorylation	10	10	1.0
+GO:0046914	molecular_function	transition metal ion binding	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:1901135	biological_process	carbohydrate derivative metabolic process	10	10	1.0

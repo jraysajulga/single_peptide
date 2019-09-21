@@ -1,0 +1,57 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:37:59 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0006725	biological_process	cellular aromatic compound metabolic process	10	10	1.0
+GO:0140098	molecular_function	catalytic activity, acting on RNA	10	10	1.0
+GO:0140102	molecular_function	catalytic activity, acting on a rRNA	10	10	1.0
+GO:0044444	cellular_component	cytoplasmic part	10	10	1.0
+GO:0070039	molecular_function	rRNA (guanosine-2'-O-)-methyltransferase activity	10	10	1.0
+GO:0034660	biological_process	ncRNA metabolic process	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0016070	biological_process	RNA metabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0016072	biological_process	rRNA metabolic process	10	10	1.0
+GO:0008649	molecular_function	rRNA methyltransferase activity	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0009451	biological_process	RNA modification	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0003676	molecular_function	nucleic acid binding	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0000154	biological_process	rRNA modification	10	10	1.0
+GO:0006364	biological_process	rRNA processing	10	10	1.0
+GO:0016435	molecular_function	rRNA (guanine) methyltransferase activity	10	10	1.0
+GO:0005829	cellular_component	cytosol	10	10	1.0
+GO:0043412	biological_process	macromolecule modification	10	10	1.0
+GO:0016740	molecular_function	transferase activity	10	10	1.0
+GO:0043414	biological_process	macromolecule methylation	10	10	1.0
+GO:0016741	molecular_function	transferase activity, transferring one-carbon groups	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0090304	biological_process	nucleic acid metabolic process	10	10	1.0
+GO:0006396	biological_process	RNA processing	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0000451	biological_process	rRNA 2'-O-methylation	10	10	1.0
+GO:0000453	biological_process	enzyme-directed rRNA 2'-O-methylation	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0003723	molecular_function	RNA binding	10	10	1.0
+GO:0034470	biological_process	ncRNA processing	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:0044260	biological_process	cellular macromolecule metabolic process	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0006139	biological_process	nucleobase-containing compound metabolic process	10	10	1.0
+GO:0001510	biological_process	RNA methylation	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:0008168	molecular_function	methyltransferase activity	10	10	1.0
+GO:0008171	molecular_function	O-methyltransferase activity	10	10	1.0
+GO:0043170	biological_process	macromolecule metabolic process	10	10	1.0
+GO:0008173	molecular_function	RNA methyltransferase activity	10	10	1.0
+GO:0031167	biological_process	rRNA methylation	10	10	1.0
+GO:0032259	biological_process	methylation	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0008757	molecular_function	S-adenosylmethionine-dependent methyltransferase activity	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

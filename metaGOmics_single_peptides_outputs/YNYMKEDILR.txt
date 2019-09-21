@@ -1,0 +1,79 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:40:39 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+GO:0140098	molecular_function	catalytic activity, acting on RNA	10	10	1.0
+GO:0006725	biological_process	cellular aromatic compound metabolic process	10	10	1.0
+GO:0036094	molecular_function	small molecule binding	10	10	1.0
+GO:0097159	molecular_function	organic cyclic compound binding	10	10	1.0
+GO:0140101	molecular_function	catalytic activity, acting on a tRNA	10	10	1.0
+GO:0043043	biological_process	peptide biosynthetic process	10	10	1.0
+GO:0044444	cellular_component	cytoplasmic part	10	10	1.0
+GO:0032553	molecular_function	ribonucleotide binding	10	10	1.0
+GO:0032555	molecular_function	purine ribonucleotide binding	10	10	1.0
+GO:0019752	biological_process	carboxylic acid metabolic process	10	10	1.0
+GO:0032559	molecular_function	adenyl ribonucleotide binding	10	10	1.0
+GO:0005737	cellular_component	cytoplasm	10	10	1.0
+GO:0034660	biological_process	ncRNA metabolic process	10	10	1.0
+GO:0016070	biological_process	RNA metabolic process	10	10	1.0
+GO:0008152	biological_process	metabolic process	10	10	1.0
+GO:0046483	biological_process	heterocycle metabolic process	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0005524	molecular_function	ATP binding	10	10	1.0
+GO:0009987	biological_process	cellular process	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
+GO:0006082	biological_process	organic acid metabolic process	10	10	1.0
+GO:0009058	biological_process	biosynthetic process	10	10	1.0
+GO:0009059	biological_process	macromolecule biosynthetic process	10	10	1.0
+GO:1901564	biological_process	organonitrogen compound metabolic process	10	10	1.0
+GO:1901566	biological_process	organonitrogen compound biosynthetic process	10	10	1.0
+GO:0030554	molecular_function	adenyl nucleotide binding	10	10	1.0
+GO:1901576	biological_process	organic substance biosynthetic process	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0016874	molecular_function	ligase activity	10	10	1.0
+GO:0016875	molecular_function	ligase activity, forming carbon-oxygen bonds	10	10	1.0
+GO:0005829	cellular_component	cytosol	10	10	1.0
+GO:0000166	molecular_function	nucleotide binding	10	10	1.0
+GO:0006518	biological_process	peptide metabolic process	10	10	1.0
+GO:0006520	biological_process	cellular amino acid metabolic process	10	10	1.0
+GO:0003824	molecular_function	catalytic activity	10	10	1.0
+GO:0090304	biological_process	nucleic acid metabolic process	10	10	1.0
+GO:0035639	molecular_function	purine ribonucleoside triphosphate binding	10	10	1.0
+GO:0019538	biological_process	protein metabolic process	10	10	1.0
+GO:0008144	molecular_function	drug binding	10	10	1.0
+GO:0006399	biological_process	tRNA metabolic process	10	10	1.0
+GO:0006807	biological_process	nitrogen compound metabolic process	10	10	1.0
+GO:0097367	molecular_function	carbohydrate derivative binding	10	10	1.0
+GO:0043436	biological_process	oxoacid metabolic process	10	10	1.0
+GO:0044237	biological_process	cellular metabolic process	10	10	1.0
+GO:0044238	biological_process	primary metabolic process	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0017076	molecular_function	purine nucleotide binding	10	10	1.0
+GO:0044249	biological_process	cellular biosynthetic process	10	10	1.0
+GO:0006412	biological_process	translation	10	10	1.0
+GO:0004812	molecular_function	aminoacyl-tRNA ligase activity	10	10	1.0
+GO:1901360	biological_process	organic cyclic compound metabolic process	10	10	1.0
+GO:0006418	biological_process	tRNA aminoacylation for protein translation	10	10	1.0
+GO:0044260	biological_process	cellular macromolecule metabolic process	10	10	1.0
+GO:0004814	molecular_function	arginine-tRNA ligase activity	10	10	1.0
+GO:0006139	biological_process	nucleobase-containing compound metabolic process	10	10	1.0
+GO:1901363	molecular_function	heterocyclic compound binding	10	10	1.0
+GO:0006420	biological_process	arginyl-tRNA aminoacylation	10	10	1.0
+GO:0044267	biological_process	cellular protein metabolic process	10	10	1.0
+GO:0004820	molecular_function	glycine-tRNA ligase activity	10	10	1.0
+GO:0044271	biological_process	cellular nitrogen compound biosynthetic process	10	10	1.0
+GO:0006426	biological_process	glycyl-tRNA aminoacylation	10	10	1.0
+GO:0071704	biological_process	organic substance metabolic process	10	10	1.0
+GO:0043167	molecular_function	ion binding	10	10	1.0
+GO:0044281	biological_process	small molecule metabolic process	10	10	1.0
+GO:0043168	molecular_function	anion binding	10	10	1.0
+GO:0043170	biological_process	macromolecule metabolic process	10	10	1.0
+GO:0044424	cellular_component	intracellular part	10	10	1.0
+GO:0043603	biological_process	cellular amide metabolic process	10	10	1.0
+GO:0043604	biological_process	amide biosynthetic process	10	10	1.0
+GO:0034641	biological_process	cellular nitrogen compound metabolic process	10	10	1.0
+GO:1901265	molecular_function	nucleoside phosphate binding	10	10	1.0
+GO:0043038	biological_process	amino acid activation	10	10	1.0
+GO:0034645	biological_process	cellular macromolecule biosynthetic process	10	10	1.0
+GO:0043039	biological_process	tRNA aminoacylation	10	10	1.0
+GO:0005488	molecular_function	binding	10	10	1.0

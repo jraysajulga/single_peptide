@@ -1,0 +1,22 @@
+# MetaGOmics GO report
+# MetaGOmics version: 0.1.1
+# Run date: Sat Sep 21 10:39:22 PDT 2019
+GO acc	GO aspect	GO name	count	total count	ratio
+unknownfun	molecular_function	unknown molecular function	10	10	1.0
+GO:0009405	biological_process	pathogenesis	10	10	1.0
+GO:0051704	biological_process	multi-organism process	10	10	1.0
+GO:0022610	biological_process	biological adhesion	10	10	1.0
+GO:0044419	biological_process	interspecies interaction between organisms	10	10	1.0
+GO:0005575	cellular_component	cellular_component	10	10	1.0
+GO:0016021	cellular_component	integral component of membrane	10	10	1.0
+GO:0031224	cellular_component	intrinsic component of membrane	10	10	1.0
+GO:0008150	biological_process	biological_process	10	10	1.0
+GO:0044425	cellular_component	membrane part	10	10	1.0
+GO:0009279	cellular_component	cell outer membrane	10	10	1.0
+GO:0019867	cellular_component	outer membrane	10	10	1.0
+GO:0016020	cellular_component	membrane	10	10	1.0
+GO:0044462	cellular_component	external encapsulating structure part	10	10	1.0
+GO:0044464	cellular_component	cell part	10	10	1.0
+GO:0007155	biological_process	cell adhesion	10	10	1.0
+GO:0009986	cellular_component	cell surface	10	10	1.0
+GO:0003674	molecular_function	molecular_function	10	10	1.0
