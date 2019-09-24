@@ -1,6 +1,6 @@
 # MetaGOmics GO report
 # MetaGOmics version: 0.1.1
-# Run date: Tue Sep 17 22:17:08 PDT 2019
+# Run date: Mon Sep 23 21:36:05 PDT 2019
 GO acc	GO aspect	GO name	count	total count	ratio
 GO:0003824	molecular_function	catalytic activity	10	10	1.0
 unknowncmp	cellular_component	unknown cellular component	10	10	1.0
