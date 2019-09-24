@@ -26,52 +26,66 @@ library(stringr)
 
 The single peptide analysis methods and results are contained in this document. 
 
-## Twenty peptide analysis
+## Peptide deformylase activity analysis
 
-The twenty peptides are as follows:
+Let's find peptides from unipept associated with peptide deformylase activity
 
 ```{r}
-peptides <- c("IFVCDDGNGVVR",
-              "AAHLIDMNDIIR",
-              "AEIIKEFGK",
-              "AIVVQHEIDHLNGIMFYDR",
-              "ALADKYFPK",
-              "ALKDENFK",
-              "ASHLIDMDDIIR",
-              "AVAEDVTFPLSDEDIILGEK",
-              "AVAEDVTFPLSDQEIILGEK",
-              "AVAEEVSFPLADEDILLGEK",
-              "AVAEEVTFPLSDQEIILGEK",
-              "DKLDAKDDLMK",
-              "DVPGYVVR",
-              "EEFKQEKETLEK",
-              "EFENKLDEEKEK",
-              "EGFDKYNVEDKLTKEELDSIK",
-              "EGNPTLR",
-              "EQLEKEMDREEIK",
-              "FVDKDGKPIK",
-              "FVDKDGNPIK",
-              "GGVGLAAPQLDISK",
-              "GGVGLAAPQLDISR",
-              "GIDPHNKK",
-              "GTTSFTEIVK",
-              "GYNSIVVQHEIDHINGIMFYDR",
-              "IAPALKDGK",
-              "IFVCDDGNGVVR",
-              "IIAVLVPNIVEEGETPQEAYDLQAIMYNPK",
-              "IMHKEELEER",
-              "INEKDPFAVK",
-              "INETDPFAIK",
-              "INPNNPFEIK",
-              "IVAHSVQDAALADGEGCLSVDR",
-              "IVGAKGKAALLR",
-              "IVNRYEVPR",
-              "IVSHSVQDAALGEGEGCLSVDR",
-              "IYANKEELPR",
-              "KEEFKQEKETLEK",
-              "KMSSKELAEK")
-```
+cov_pat <- "\ \\(.{2,4}\\)"
+uniWS <- read.csv('unipept_results/737WS-mpa_result.csv',
+                stringsAsFactors = FALSE) %>%
+    select(peptide,
+           #uni_go_bp = GO..biological.process.,
+           uni_go_mf = GO..molecular.function.
+           #uni_go_cc = GO..cellular.component.
+           ) %>%
+    #filter(peptide %in% fivepep) %>%
+    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
+           uni_go_mf = sapply(uni_go_mf, function( x ) { 
+             terms <- strsplit(x, ';')[[1]];
+             terms <- sapply(terms, function ( x ) {
+              coverage <- str_extract(x, "\\d+%\\)");
+              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
+                str_extract(x, "GO:\\d+")
+              } else{
+                ""
+              }
+             })
+             paste(terms[terms != ""], collapse=";") }), 
+           )
+uniWS$uni_go_names <- sapply(strsplit(uniWS$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
 
+uniNS <- read.csv('unipept_results/737NS-mpa_result.csv',
+                stringsAsFactors = FALSE) %>%
+    select(peptide,
+           #uni_go_bp = GO..biological.process.,
+           uni_go_mf = GO..molecular.function.
+           #uni_go_cc = GO..cellular.component.
+           ) %>%
+    #filter(peptide %in% fivepep) %>%
+    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
+           uni_go_mf = sapply(uni_go_mf, function( x ) { 
+             terms <- strsplit(x, ';')[[1]];
+             terms <- sapply(terms, function ( x ) {
+              coverage <- str_extract(x, "\\d+%\\)");
+              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
+                str_extract(x, "GO:\\d+")
+              } else{
+                ""
+              }
+             })
+             paste(terms[terms != ""], collapse=";") }), 
+           )
+uniNS$uni_go_names <- sapply(strsplit(uniNS$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
+```
+```{r}
+#sort(unique(uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]$peptide))
+#sort(unique(uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]$peptide))
+peptides <- sort(unique(c(uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]$peptide,
+      uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]$peptide)))
+write.table(peptides, file='unipept_results/unipeptides.tab', quote=FALSE,
+            row.names=FALSE, col.names=FALSE)
+```
 
 ```{r}
 filterOntology <- function(go_list, ontology){
@@ -105,10 +119,19 @@ uni <- read.csv('unipept_results/mpa_result.csv',
            uni_go_mf = GO..molecular.function.
            #uni_go_cc = GO..cellular.component.
            ) %>%
-    #filter(peptide %in% fivepep) %>%
+    filter(peptide %in% peptides) %>%
     mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
-           uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = "")
-           #uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = "")
+           uni_go_mf = sapply(uni_go_mf, function( x ) { 
+             terms <- strsplit(x, ';')[[1]];
+             terms <- sapply(terms, function ( x ) {
+              coverage <- str_extract(x, "\\d+%\\)");
+              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
+                str_extract(x, "GO:\\d+")
+              } else{
+                ""
+              }
+             })
+             paste(terms[terms != ""], collapse=";") }), 
            )
 uni$uni_go_names <- sapply(strsplit(uni$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
 uni
@@ -129,20 +152,39 @@ uni
         - Min e-value: 200000
         - Min bit score: 20
 * Download and compare GO terms
-
 ```{r}
-em <- read.delim("eggnog_results/Galaxy15-[eggNOG_Mapper_on_data_12__diamond.annotations].tabular",
-                 stringsAsFactors = FALSE,
-                 header=FALSE) %>%
-    select(peptide = V1, em_go = V6) %>%
-    #filter(peptide %in% fivepep) %>%
-    mutate(em_go = sapply(em_go, function ( go ) {
-      paste(filterOntology(str_split(go, ",")[[1]], ontology), collapse="; ")
-    }))
-em$em_names <- sapply(strsplit(em$em_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
-em
+peptidesNS <- read.delim("peptide_shaker_outputs/737NS_Peptide_Shaker_Peptide_Report.tabular",
+                         stringsAsFactors = FALSE) %>%
+    select(peptide = Sequence, countNS = "X.Validated.PSMs")
+
+peptidesWS <- read.delim("peptide_shaker_outputs/737WS_Peptide_Shaker_Peptide_Report.tabular",
+                         stringsAsFactors = FALSE) %>%
+    select(peptide = Sequence, countWS = "X.Validated.PSMs") 
+
+norm_ratio <- sum(peptidesWS$countWS) / sum(peptidesNS$countNS)
+peptidesNS$countNS <- peptidesNS$countNS * sum(peptidesWS$countWS) / sum(peptidesNS$countNS)
+peptides_all <- full_join(peptidesNS, peptidesWS, by = "peptide")
+peptides_all[is.na(peptides_all)] <- 0
+peptides_all
 ```
 
+```{r}
+eggnog <- read.delim("eggnog_results/diamond_annotations.tabular",
+                     stringsAsFactors = FALSE,
+                     header = FALSE) %>% 
+    select(peptide = V1, protein = V2, gene = V5, go = V6, ko = V7, desc = V13) %>%
+    filter(peptide %in% peptides)
+#eggnog
+eggnog_w_counts <- left_join(eggnog,
+                             peptides_all,
+                             by = "peptide")
+
+eggnog_w_counts$go <- sapply(eggnog_w_counts$go, function ( go ) {
+      paste(filterOntology(str_split(go, ",")[[1]], ontology), collapse="; ")
+    })
+eggnog_w_counts <- eggnog_w_counts[eggnog_w_counts$go != "",]
+eggnog_w_counts
+```
 
 ## BLASTP against UniProt
 
@@ -167,6 +209,9 @@ files <- list.files('uniprot_blastp_outputs')
 for (i in 1:length(peptides)){
   filename = paste('uniprot_blastp_outputs', paste(peptides[i], '.tab', sep=""), sep="/")
   info = file.info(filename)
+  if (is.na(info$size)){
+    print(peptides[i])
+  }
   if (length(rownames(info[info$size == 0, ])) != 1){
     result <- read.delim(filename,
                          stringsAsFactors = FALSE,
@@ -204,12 +249,13 @@ mg_go <- rep(0, length(peptides))
 dir <- 'metaGOmics_single_peptides_outputs/'
 files <- list.files(dir)
 for (i in 1:length(peptides)){
-    result <- read.delim(paste(dir, paste(peptides[i], '.txt', sep=""), sep=""),
-                   stringsAsFactors = FALSE,
-                   na.strings = c("", "NA", "NaN"),
-                   comment.char = "#")
-    gos <- filterOntology(result$GO.acc, ontology)
-    mg_go[i] <- paste(gos, collapse = "; ")
+  result <- read.delim(paste(dir, paste(peptides[i], '.txt', sep=""), sep=""),
+                       stringsAsFactors = FALSE,
+                       na.strings = c("", "NA", "NaN"),
+                       comment.char = "#")
+  gos <- filterOntology(result$GO.acc, ontology)
+  gos <- gos[gos != ""]
+  mg_go[i] <- paste(gos, collapse = "; ")
 }
 mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
 mg$mg_names <- sapply(strsplit(mg$mg_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
@@ -498,13 +544,12 @@ length(eggnog_list)
 
 
 ```{r}
-
-
-find_path <- function(buni, extraneous){
-  
-}
-#find_path("GO:0006417", )
-
+#row <- all_results[all_results$peptide == "IVGAKGKAALLR",]
+row <- all_results[all_results$peptide == "IFVCDDGNGVVR",]
+row$blast_names
+row$em_names
+row$mg_names
+row$uni_go_names
 ```
 
 
