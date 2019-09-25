@@ -77,6 +77,8 @@ uniNS <- read.csv('unipept_results/737NS-mpa_result.csv',
              paste(terms[terms != ""], collapse=";") }), 
            )
 uniNS$uni_go_names <- sapply(strsplit(uniNS$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
+uniWS
+uniNS
 ```
 ```{r}
 #sort(unique(uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]$peptide))
@@ -136,6 +138,11 @@ uni <- read.csv('unipept_results/mpa_result.csv',
 uni$uni_go_names <- sapply(strsplit(uni$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
 uni
 ```
+Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
+```{r}
+uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]
+uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]
+```
 
 
 ## eggNOG mapper
@@ -185,6 +192,11 @@ eggnog_w_counts$go <- sapply(eggnog_w_counts$go, function ( go ) {
 eggnog_w_counts <- eggnog_w_counts[eggnog_w_counts$go != "",]
 eggnog_w_counts
 ```
+Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
+```{r}
+eggnog_w_counts$countNS
+eggnog_w_counts$countWS
+```
 
 ## BLASTP against UniProt
 
@@ -230,7 +242,18 @@ blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
 blast$blast_names <- sapply(strsplit(blast$blast_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
 blast
 ```
-
+Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
+```{r}
+blast_w_counts <- left_join(blast,
+                             peptides_all,
+                             by = "peptide")
+blast_deformyl <- blast_w_counts[grepl("peptide deformylase activity", blast_w_counts$blast_name),]
+blast_deformyl_ws <- blast_deformyl[!is.na(blast_deformyl$countWS),]
+blast_deformyl_ns <- blast_deformyl[!is.na(blast_deformyl$countNS),]
+length(blast_deformyl$peptide)
+sum(blast_deformyl_ws$countWS)
+sum(blast_deformyl_ns$countNS)
+```
 
 ## MetaGOmics
 
@@ -242,7 +265,6 @@ blast
 * Result URL: https://www.yeastrc.org/metagomics/viewUploadedFasta.do?uid=MLRUUtSgjRbbO5td
 * One-by-one, upload peptides and run
 * Download results individually, combine into table
-
 
 ```{r}
 mg_go <- rep(0, length(peptides))
@@ -260,6 +282,15 @@ for (i in 1:length(peptides)){
 mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
 mg$mg_names <- sapply(strsplit(mg$mg_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
 mg
+```
+Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
+```{r}
+metagomics <- read.delim("metaGOmics_results/go_compare_149_150.txt",
+                             stringsAsFactors = FALSE,
+                             comment.char = "#")
+metagomics[metagomics$GO.name == "peptide deformylase activity",] %>%
+  select(mg_NS = Run.1.PSM.count, mg_WS = Run.2.PSM.count)
+length(mg[grepl("peptide deformylase activity", mg$mg_names),]$peptide)
 ```
 
 ## Combine all of the results:
