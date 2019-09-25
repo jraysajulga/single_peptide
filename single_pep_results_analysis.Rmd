@@ -267,6 +267,7 @@ sum(blast_deformyl_ns$countNS)
 * Download results individually, combine into table
 
 ```{r}
+library(GO.db)
 mg_go <- rep(0, length(peptides))
 dir <- 'metaGOmics_single_peptides_outputs/'
 files <- list.files(dir)
@@ -275,8 +276,12 @@ for (i in 1:length(peptides)){
                        stringsAsFactors = FALSE,
                        na.strings = c("", "NA", "NaN"),
                        comment.char = "#")
-  gos <- filterOntology(result$GO.acc, ontology)
-  gos <- gos[gos != ""]
+  if (length(result$GO.acc) > 0){
+    gos <- filterOntology(result$GO.acc, ontology)
+    gos <- gos[gos != ""]
+  } else {
+    gos <- ""
+  }
   mg_go[i] <- paste(gos, collapse = "; ")
 }
 mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
@@ -522,7 +527,7 @@ for (n in 1:nrow(all_results)){
           axis.text.x = element_text(size=8, angle = 90, hjust = 0.95, vjust = 0.2),
           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
   print(plot)
-  ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
+  ggsave(paste("plots/peptide_deformylase/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
