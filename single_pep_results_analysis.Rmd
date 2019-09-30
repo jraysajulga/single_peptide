@@ -190,7 +190,8 @@ eggnog_w_counts$go <- sapply(eggnog_w_counts$go, function ( go ) {
       paste(filterOntology(str_split(go, ",")[[1]], ontology), collapse="; ")
     })
 eggnog_w_counts <- eggnog_w_counts[eggnog_w_counts$go != "",]
-eggnog_w_counts
+em <- eggnog_w_counts %>% select(peptide, em_go = go)
+em
 ```
 Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
 ```{r}
@@ -301,7 +302,7 @@ length(mg[grepl("peptide deformylase activity", mg$mg_names),]$peptide)
 ## Combine all of the results:
 
 ```{r}
-all_results <- plyr::join_all(list(em, blast, mg, uni), by = "peptide")
+all_results <- plyr::join_all(list(blast, mg, uni, em), by = "peptide")
 peptide <- "IFVCDD"
 "BLAST"
 all_results[grepl(peptide, all_results$peptide),][1,]$blast_names
