@@ -91,6 +91,7 @@ uni <- read.csv('unipept_20_peptides_result.csv',
            uni_go_mf = str_replace_all(string = uni_go_mf, pattern = cov_pat, replacement = "")
            #uni_go_cc = str_replace_all(string = uni_go_cc, pattern = cov_pat, replacement = "")
            )
+uni
 ```
 
 
@@ -117,10 +118,12 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
     mutate(em_go = sapply(em_go, function ( go ) {
       paste(filterOntology(str_split(go, ",")[[1]], ontology), collapse="; ")
     }))
+em
 ```
 
 
 ## BLASTP against UniProt
+
 
 
 * Use the UniProtKB BLAST web search on each peptide, one-by-one
@@ -135,6 +138,22 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
 * To match Unipept, annotate each peptide with only the GO terms that are present in 5% or more of the proteins
 * Get the most frequent protein name
 * For taxonomy, we can also calculate the lowest common ancestor of each peptide (TODO)
+
+```{r}
+format_go_filter_mf <- function(gos){
+  sapply(gos, function(go) {
+    go_list <- strsplit(as.character(go), '; ')[[1]]
+    go_list_mf <- go_list[grepl("F:", go_list)]
+    paste(gsub("F:", "", go_list_mf), collapse="; ")
+  })
+}
+
+blast <- read.delim('data/blast2go/blast2go_go_table.txt') %>% 
+  select(blast_go = GO.IDs) %>%
+  mutate(blast_go = format_go_filter_mf(blast_go))
+blast
+```
+
 
 ```{r}
 blast_go <- rep(0, length(peptides))
@@ -403,7 +422,11 @@ for (n in 1:nrow(all_results)){
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
 ```{r}
-length(closely_related)
+#all_results[all_results$peptide == 'VINGAATSLGR',]
+#all_results[all_results$peptide == 'VINGAATSLGR',]$uni_go_mf
+Term(strsplit(all_results[all_results$peptide == 'AFLPGSLVDTRPVR',]$blast_go, "; ")[[1]])
+#Term(strsplit(all_results[all_results$peptide == 'VINGAATSLGR',]$uni_go_mf, ";")[[1]])
+
 #!grepl("GO:\\d{7}",closely_related)
 ```
 
