@@ -216,33 +216,62 @@ eggnog_w_counts$countWS
 * For taxonomy, we can also calculate the lowest common ancestor of each peptide (TODO)
 
 ```{r}
-blast_go <- rep("", length(peptides))
-blast_names <- rep("", length(peptides))
-files <- list.files('uniprot_blastp_outputs')
-for (i in 1:length(peptides)){
-  filename = paste('uniprot_blastp_outputs', paste(peptides[i], '.tab', sep=""), sep="/")
-  info = file.info(filename)
-  if (is.na(info$size)){
-    print(peptides[i])
-  }
-  if (length(rownames(info[info$size == 0, ])) != 1){
-    result <- read.delim(filename,
-                         stringsAsFactors = FALSE,
-                         na.strings = c("", "NA", "NaN"))
-    gos <- table(unlist(str_split(result$Gene.ontology..molecular.function., "; ")))/50
-    filtered_gos <- names(gos)[which(gos > 0.05)]
-    filtered_gos <- str_extract(filtered_gos, "GO:\\d+")
-    if(length(filtered_gos) == 0){ filtered_gos <- "" }
-    #str_extract(filtered_gos, "[\\w ]+\\w"))
-    filtered_gos <- filtered_gos[Ontology(filtered_gos) == ontology]
-    if(is.na(filtered_gos)) { filtered_gos <- ""}
-    blast_go[i] <- paste(filtered_gos, collapse = "; ")
-  }
+process_gos <- function(go_col){
+  sapply(go_col, function(go_list){
+    go_list <- strsplit(as.character(go_list), '; ')[[1]]
+    go_list_mf <- go_list[str_detect(go_list, "F")]
+    go_list_mf_formatted <- gsub("F:", "", go_list_mf)
+    paste(go_list_mf_formatted, collapse="; ")
+  })
 }
-blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
-blast$blast_names <- sapply(strsplit(blast$blast_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
+
+blast <- read.delim('data/peptide_deformylase_activity.txt') %>%
+  select(peptide = SeqName,
+         blast_go = GO.IDs) %>%
+  mutate(blast_go = process_gos(blast_go))
+blast <- blast[blast$blast_go != "",]
 blast
 ```
+
+```{r}
+# blast_go <- rep("", length(peptides))
+# blast_names <- rep("", length(peptides))
+# files <- list.files('uniprot_blastp_outputs')
+# for (i in 1:length(peptides)){
+#   filename = paste('uniprot_blastp_outputs', paste(peptides[i], '.tab', sep=""), sep="/")
+#   info = file.info(filename)
+#   if (is.na(info$size)){
+#     print(peptides[i])
+#   }
+#   if (length(rownames(info[info$size == 0, ])) != 1){
+#     result <- read.delim(filename,
+#                          stringsAsFactors = FALSE,
+#                          na.strings = c("", "NA", "NaN"))
+#     gos <- table(unlist(str_split(result$Gene.ontology..molecular.function., "; ")))/50
+#     filtered_gos <- names(gos)[which(gos > 0.05)]
+#     filtered_gos <- str_extract(filtered_gos, "GO:\\d+")
+#     if(length(filtered_gos) == 0){ filtered_gos <- "" }
+#     #str_extract(filtered_gos, "[\\w ]+\\w"))
+#     filtered_gos <- filtered_gos[Ontology(filtered_gos) == ontology]
+#     if(is.na(filtered_gos)) { filtered_gos <- ""}
+#     blast_go[i] <- paste(filtered_gos, collapse = "; ")
+#   }
+# }
+# blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
+# blast$blast_names <- sapply(strsplit(blast$blast_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
+# blast
+```
+
+```{r}
+# format_to_fasta <- function(peptides){
+#   unlist(sapply(peptides, function(peptide) {  list(paste0('>', peptide), peptide) }))
+# }
+# write.table(format_to_fasta(blast$peptide),
+#                    file='data/peptide_deformylase_activity.fasta',
+#             quote=FALSE, row.names=FALSE,)
+```
+
+
 Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
 ```{r}
 blast_w_counts <- left_join(blast,
@@ -298,6 +327,7 @@ metagomics[metagomics$GO.name == "peptide deformylase activity",] %>%
   select(mg_NS = Run.1.PSM.count, mg_WS = Run.2.PSM.count)
 length(mg[grepl("peptide deformylase activity", mg$mg_names),]$peptide)
 ```
+
 
 ## Combine all of the results:
 
