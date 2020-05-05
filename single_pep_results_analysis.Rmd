@@ -136,6 +136,15 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
 * Get the most frequent protein name
 * For taxonomy, we can also calculate the lowest common ancestor of each peptide (TODO)
 
+# ```{r}
+# format_to_fasta <- function(peptides){
+#  unlist(sapply(peptides, function(peptide) {  list(paste0('>', peptide), peptide) }))
+# }
+# write.table(format_to_fasta(blast$peptide),
+#                   file='data/737.fasta',
+#             quote=FALSE, row.names=FALSE,)
+# ```
+
 ```{r}
 blast_go <- rep(0, length(peptides))
 files <- list.files('uniprot_blastp_outputs')
