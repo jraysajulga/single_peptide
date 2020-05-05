@@ -529,7 +529,7 @@ for (n in 1:nrow(all_results)){
                  get_length(em_blast), get_length(em_descendants), get_length(em_ancestors), get_length(em_ancestors_kids), get_length(em_extraneous),
                  get_length(mg_blast), get_length(mg_descendants), get_length(mg_ancestors), get_length(mg_ancestors_kids), get_length(mg_extraneous),
                  get_length(uni_blast), get_length(uni_descendants), get_length(uni_ancestors), get_length(uni_ancestors_kids), get_length(uni_extraneous)),
-    Tool = rep(c("BLAST", "EggNOG mapper", "MetaGOmics", "Unipept"), each = 5)
+    Tool = rep(c("BLAST2GO - NCBI (nr)", "EggNOG mapper", "MetaGOmics", "Unipept"), each = 5)
   )
   term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
                                levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST"))
