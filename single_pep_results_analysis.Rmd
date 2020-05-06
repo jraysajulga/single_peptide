@@ -145,21 +145,22 @@ em <- read.delim("eggnog_mapper_20_sequences_results.tabular",
 #             quote=FALSE, row.names=FALSE,)
 # ```
 
+
 ```{r}
-blast_go <- rep(0, length(peptides))
-files <- list.files('uniprot_blastp_outputs')
-for (i in 1:length(peptides)){
-    result <- read.delim(paste('uniprot_blastp_outputs', paste(peptides[i], '.tab', sep=""), sep="/"),
-                   stringsAsFactors = FALSE,
-                   na.strings = c("", "NA", "NaN"))
-    gos <- table(unlist(str_split(result$Gene.ontology.IDs, "; ")))/50
-    filtered_gos <- names(gos)[which(gos > 0.05)]
-    if(length(filtered_gos) == 0){ filtered_gos <- "" }
-    filtered_gos <- filtered_gos[Ontology(filtered_gos) == ontology]
-    if(is.na(filtered_gos)) { filtered_gos <- ""}
-    blast_go[i] <- paste(filtered_gos, collapse = "; ")
+process_gos <- function(go_col){
+  sapply(go_col, function(go_list){
+    go_list <- strsplit(as.character(go_list), '; ')[[1]]
+    go_list_mf <- go_list[str_detect(go_list, "F")]
+    go_list_mf_formatted <- gsub("F:", "", go_list_mf)
+    paste(go_list_mf_formatted, collapse="; ")
+  })
 }
-blast <- data.frame(peptide = peptides, blast_go, stringsAsFactors = FALSE)
+
+blast <- read.delim('data/737_results.txt') %>%
+  select(peptide = SeqName,
+         blast_go = GO.IDs) %>%
+  mutate(blast_go = process_gos(blast_go))
+blast <- blast[blast$blast_go != "",]
 blast
 ```
 
@@ -296,118 +297,129 @@ output <- data.frame(Peptide = all_results[,'peptide'],
 	                     stringsAsFactors = FALSE)
 #for (n in 1:1){
 for (n in 1:nrow(all_results)){
-  print(all_results[n, 'peptide'])
-  blast <- unique(c(str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)))
-  blast <- blast[blast != ""]
-  print("blast terms:")
-  print(get_go_names(blast))
-  print("")
-  
-  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE)))
-  uni <- uni[uni != ""]
-  print("unipept terms:")
-  print(get_go_names(uni))
-  print("")
-  
-  eggnog_list <- unique(c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE)))
-  metaGOmics_list <- unique(c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE)))
-  print("eggNOG terms")
-  print(get_go_names(eggnog_list))
-  print("metaGOmics terms")
-  print(get_go_names(metaGOmics_list))
-  print("")
-  
-  output$em.list[n] <- paste(eggnog_list, collapse="; ")
-  output$mg.list[n] <- paste(metaGOmics_list, collapse="; ")
-  
-  ancestors <- setdiff(unlist(get_go_ancestors(blast)), blast)
-  descendants <- setdiff(unlist(get_go_descendants(blast)), blast)
-  children_of_ancestors <- setdiff(unlist(get_children(matrix(ancestors))), ancestors)
-  closely_related <- union_all(blast, descendants, ancestors, children_of_ancestors)
-  
-  em_ancestors <- intersect(eggnog_list, ancestors)
-  mg_ancestors <- intersect(metaGOmics_list, ancestors)
-  uni_ancestors <- intersect(uni, ancestors)
-  print("Ancestors:")
-  print("eggnog:")
-  print(get_go_names(em_ancestors))
-  print("metagomics:")
-  print(get_go_names(mg_ancestors))
-  print("")
-  
-  em_descendants <- intersect(descendants, eggnog_list)
-  mg_descendants <- intersect(descendants, metaGOmics_list)
-  uni_descendants <- intersect(descendants, uni)
-  em_ancestors_kids <- setdiff(unlist(intersect(eggnog_list, children_of_ancestors)), blast)
-  mg_ancestors_kids <- setdiff(unlist(intersect(metaGOmics_list, children_of_ancestors)), blast)
-  uni_ancestors_kids <- setdiff(unlist(intersect(uni, children_of_ancestors)), blast)
-  print("Descendants:")
-  print("eggnog:")
-  print(get_go_names(em_descendants))
-  print("metagomics:")
-  print(get_go_names(mg_descendants))
-  print("")
-  print("Ancestors' kids:")
-  print("eggnog:")
-  print(get_go_names(em_ancestors_kids))
-  print("metagomics:")
-  print(get_go_names(mg_ancestors_kids))
-  print(mg_ancestors_kids)
-  print("")
-  
-  em_extraneous <- setdiff(eggnog_list, closely_related)
-  mg_extraneous <- setdiff(metaGOmics_list, closely_related)
-  uni_extraneous <- setdiff(uni, closely_related)
-  print("Extraneous:")
-  print("eggnog:")
-  print(get_go_names(em_extraneous))
-  print(em_extraneous)
-  print(length(em_extraneous))
-  print("metagomics:")
-  print(get_go_names(mg_extraneous))
-  print("")
-  
-  
-  em_blast <- intersect(eggnog_list, blast)
-  mg_blast <- intersect(metaGOmics_list, blast)
-  uni_blast <- intersect(uni, blast)
-  
-  term_df <- data.frame(
-    typeOfTerm = rep(c("BLAST", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 4),
-    NumTerms = c(get_length(blast), 0, 0, 0, 0,
-                 get_length(em_blast), get_length(em_descendants), get_length(em_ancestors), get_length(em_ancestors_kids), get_length(em_extraneous),
-                 get_length(mg_blast), get_length(mg_descendants), get_length(mg_ancestors), get_length(mg_ancestors_kids), get_length(mg_extraneous),
-                 get_length(uni_blast), get_length(uni_descendants), get_length(uni_ancestors), get_length(uni_ancestors_kids), get_length(uni_extraneous)),
-    Tool = rep(c("BLAST", "EggNOG mapper", "MetaGOmics", "Unipept"), each = 5)
-  )
-  term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
-                               levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST"))
-  
-  
-  plot <- ggplot(term_df, aes(x = Tool, y = NumTerms, fill = typeOfTerm)) +
-    geom_bar(color = "black", stat = "identity", position = "stack", size = 0.1) +
-    scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
-                                                 "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
-                                                 "Descendants" = "#4FAFE4", "BLAST" = "#5DBA85")) +
-    ylab("Number of Terms") +
-    # ylab(" ") + xlab(" ") +
-    scale_y_continuous(breaks = round(seq(0, max(sapply(unique(term_df$typeOfTerm), function( tool ) {
-                                            sum(term_df[term_df$typeOfTerm == tool,]$NumTerms)  
-                                          })), by = 2) + 2,1)) +
-    ggtitle(all_results[n, 'peptide']) +
-    #theme_update(plot.title = element_text(hjust = 0.5, size = 6)) +
-    theme_classic() + 
-    theme(legend.title=element_text(size=22),
-          #legend.title=element_blank(),
-          plot.title = element_text(size = 8, hjust = 0.5, face = "bold"),
-          legend.text=element_text(size=18),
-          legend.position="right",
-          #legend.position="none",
-          legend.spacing.x = unit(0.8, "cm"),
-          axis.text.x = element_text(size=8, angle = 90, hjust = 0.95, vjust = 0.2),
-          axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
-  print(plot)
-  ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
+  if (n != 4 && n != 14){
+    
+    print(all_results[n, 'peptide'])
+    blast <- unique(c(str_split(all_results[n, 'blast_go'], "; ", simplify=TRUE)))
+    blast <- blast[blast != ""]
+    print("blast terms:")
+    print(get_go_names(blast))
+    print("")
+    
+    uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE)))
+    uni <- uni[uni != ""]
+    print("unipept terms:")
+    print(get_go_names(uni))
+    print("")
+    
+    eggnog_list <- unique(c(str_split(all_results[n, 'em_go'], "; ", simplify =TRUE)))
+    metaGOmics_list <- unique(c(str_split(all_results[n, 'mg_go'], "; ", simplify=TRUE)))
+    print("eggNOG terms")
+    print(get_go_names(eggnog_list))
+    print("metaGOmics terms")
+    print(get_go_names(metaGOmics_list))
+    print("")
+    
+    output$em.list[n] <- paste(eggnog_list, collapse="; ")
+    output$mg.list[n] <- paste(metaGOmics_list, collapse="; ")
+    
+    ancestors <- setdiff(unlist(get_go_ancestors(blast)), blast)
+    descendants <- setdiff(unlist(get_go_descendants(blast)), blast)
+    
+    print(n)
+    children_of_ancestors <- tryCatch({
+      setdiff(unlist(get_children(matrix(ancestors))), ancestors)
+    }, warning = function(w) {
+      print(ancestors)
+      c()
+    })
+    
+    closely_related <- union_all(blast, descendants, ancestors, children_of_ancestors)
+    
+    em_ancestors <- intersect(eggnog_list, ancestors)
+    mg_ancestors <- intersect(metaGOmics_list, ancestors)
+    uni_ancestors <- intersect(uni, ancestors)
+    print("Ancestors:")
+    print("eggnog:")
+    print(get_go_names(em_ancestors))
+    print("metagomics:")
+    print(get_go_names(mg_ancestors))
+    print("")
+    
+    em_descendants <- intersect(descendants, eggnog_list)
+    mg_descendants <- intersect(descendants, metaGOmics_list)
+    uni_descendants <- intersect(descendants, uni)
+    em_ancestors_kids <- setdiff(unlist(intersect(eggnog_list, children_of_ancestors)), blast)
+    mg_ancestors_kids <- setdiff(unlist(intersect(metaGOmics_list, children_of_ancestors)), blast)
+    uni_ancestors_kids <- setdiff(unlist(intersect(uni, children_of_ancestors)), blast)
+    print("Descendants:")
+    print("eggnog:")
+    print(get_go_names(em_descendants))
+    print("metagomics:")
+    print(get_go_names(mg_descendants))
+    print("")
+    print("Ancestors' kids:")
+    print("eggnog:")
+    print(get_go_names(em_ancestors_kids))
+    print("metagomics:")
+    print(get_go_names(mg_ancestors_kids))
+    print(mg_ancestors_kids)
+    print("")
+    
+    em_extraneous <- setdiff(eggnog_list, closely_related)
+    mg_extraneous <- setdiff(metaGOmics_list, closely_related)
+    uni_extraneous <- setdiff(uni, closely_related)
+    print("Extraneous:")
+    print("eggnog:")
+    print(get_go_names(em_extraneous))
+    print(em_extraneous)
+    print(length(em_extraneous))
+    print("metagomics:")
+    print(get_go_names(mg_extraneous))
+    print("")
+    
+    
+    em_blast <- intersect(eggnog_list, blast)
+    mg_blast <- intersect(metaGOmics_list, blast)
+    uni_blast <- intersect(uni, blast)
+    
+    term_df <- data.frame(
+      typeOfTerm = rep(c("BLAST", "Descendants", "Ancestors", "Ancestors' kids", "Extraneous"), 4),
+      NumTerms = c(get_length(blast), 0, 0, 0, 0,
+                   get_length(em_blast), get_length(em_descendants), get_length(em_ancestors), get_length(em_ancestors_kids), get_length(em_extraneous),
+                   get_length(mg_blast), get_length(mg_descendants), get_length(mg_ancestors), get_length(mg_ancestors_kids), get_length(mg_extraneous),
+                   get_length(uni_blast), get_length(uni_descendants), get_length(uni_ancestors), get_length(uni_ancestors_kids), get_length(uni_extraneous)),
+      Tool = rep(c("BLAST", "EggNOG mapper", "MetaGOmics", "Unipept"), each = 5)
+    )
+    term_df$typeOfTerm <- factor(term_df$typeOfTerm, 
+                                 levels = c("Extraneous", "Ancestors' kids", "Ancestors", "Descendants", "BLAST"))
+    
+    
+    plot <- ggplot(term_df, aes(x = Tool, y = NumTerms, fill = typeOfTerm)) +
+      geom_bar(color = "black", stat = "identity", position = "stack", size = 0.1) +
+      scale_fill_manual("Type of term", values = c("Extraneous" = "#D576EE",
+                                                   "Ancestors' kids" = "#A4A233", "Ancestors" = "#E57D74",
+                                                   "Descendants" = "#4FAFE4", "BLAST" = "#5DBA85")) +
+      ylab("Number of Terms") +
+      # ylab(" ") + xlab(" ") +
+      scale_y_continuous(breaks = round(seq(0, max(sapply(unique(term_df$typeOfTerm), function( tool ) {
+        sum(term_df[term_df$typeOfTerm == tool,]$NumTerms)  
+      })), by = 2) + 2,1)) +
+      ggtitle(all_results[n, 'peptide']) +
+      #theme_update(plot.title = element_text(hjust = 0.5, size = 6)) +
+      theme_classic() + 
+      theme(legend.title=element_text(size=22),
+            #legend.title=element_blank(),
+            plot.title = element_text(size = 8, hjust = 0.5, face = "bold"),
+            legend.text=element_text(size=18),
+            legend.position="right",
+            #legend.position="none",
+            legend.spacing.x = unit(0.8, "cm"),
+            axis.text.x = element_text(size=8, angle = 90, hjust = 0.95, vjust = 0.2),
+            axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
+    print(plot)
+    ggsave(paste("plots/737/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
+  }
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
