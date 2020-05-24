@@ -111,38 +111,59 @@ ontology <- "MF"
 * Annotate each peptide with only the GO terms that are present in 5% or more of the proteins (percentages are returned in GO term column)
 
 ```{r}
-library(dplyr)
-library(stringr)
-cov_pat <- "\ \\(.{2,4}\\)"
-uni <- read.csv('unipept_results/mpa_result.csv',
-                stringsAsFactors = FALSE) %>%
-    select(peptide,
-           #uni_go_bp = GO..biological.process.,
-           uni_go_mf = GO..molecular.function.
-           #uni_go_cc = GO..cellular.component.
-           ) %>%
-    filter(peptide %in% peptides) %>%
-    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
-           uni_go_mf = sapply(uni_go_mf, function( x ) { 
-             terms <- strsplit(x, ';')[[1]];
-             terms <- sapply(terms, function ( x ) {
-              coverage <- str_extract(x, "\\d+%\\)");
-              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
-                str_extract(x, "GO:\\d+")
-              } else{
-                ""
-              }
-             })
-             paste(terms[terms != ""], collapse=";") }), 
-           )
-uni$uni_go_names <- sapply(strsplit(uni$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
+add_coverage <- function(gos_col, go_protein_counts_col, total_protein_count_col){
+  mapply(function(gos_col, go_protein_counts_col, total_protein_count_col){
+    sapply(1:length(gos_col), function(i){
+      gos_list <- strsplit(as.character(gos_col[i]), ',')[[1]]
+      gos_protein_counts_list <- strsplit(as.character(go_protein_counts_col[i]), ',')[[1]]
+      paste(mapply(function(gos, go_protein_counts) {
+        coverage <- round(as.numeric(go_protein_counts) / total_protein_count_col[i], digits = 3)
+        paste0(gos, '(', coverage, ')')
+      }, gos=gos_list, go_protein_counts=gos_protein_counts_list),
+      collapse=",")
+    })
+  }, gos_col=gos_col, go_protein_counts_col=go_protein_counts_col, total_protein_count_col)
+}
+
+filter_coverages <- function(go_lists){
+  sapply(go_lists, function(go_list){
+    go_list <- strsplit(go_list, ',')[[1]]
+    #go_list
+    coverages <- as.numeric(str_match(go_list, '\\((.+)\\)')[,2])
+    paste(go_list[coverages > 0.05], collapse=',')
+  })
+} 
+
+filter_go_mf <- function(go_list){
+  go_list <- strsplit(as.character(go_list), ',')[[1]] 
+  go_processed <- sapply(go_list, function(go){
+    str_match(go, '(GO:\\d+)\\((.+)\\)')
+  })
+  go_processed[2,][Ontology(go_processed[2,]) == "MF"]
+}
+
+unipept_pep <- read.delim('data/unipept/737all-unipept-pept2go.tabular') %>%
+  filter(str_detect(go_terms, go_target)) %>%
+  mutate(go_coverage = add_coverage(go_terms, go_protein_counts, total_protein_count),
+         filtered_gos = filter_coverages(go_coverage),
+         go_mf_filtered = sapply(filtered_gos, function(go_list){
+           paste(filter_go_mf(go_list), collapse=',')
+         }))
+
+uni <- unipept_pep %>%
+  filter(str_detect(go_mf_filtered, go_target))
+# unipept_hits_unfiltered <- as.character(unipept_pep_refiltered$go_terms)
+# unipept_hits_unfiltered <- unique(unlist(strsplit(unipept_hits_unfiltered, ',')))
 uni
+# Term(setdiff(unipept_hits_unfiltered, unipept_hits))
 ```
-Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
-```{r}
-uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]
-uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]
-```
+
+
+<!-- Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts -->
+<!-- ```{r} -->
+<!-- uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),] -->
+<!-- uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),] -->
+<!-- ``` -->
 
 
 ## eggNOG mapper
@@ -225,7 +246,7 @@ process_gos <- function(go_col){
   })
 }
 
-blast <- read.delim('data/peptide_deformylase_activity.txt') %>%
+blast <- read.delim('data/blast2go_outputs/uni_glucosyl_peps.txt') %>%
   select(peptide = SeqName,
          blast_go = GO.IDs) %>%
   mutate(blast_go = process_gos(blast_go))
