@@ -26,67 +26,12 @@ library(stringr)
 
 The single peptide analysis methods and results are contained in this document. 
 
-## Peptide deformylase activity analysis
-
-Let's find peptides from unipept associated with peptide deformylase activity
+### 20 Random peptides for Acetyl-CoA C-acetyltransferase activity
 
 ```{r}
-cov_pat <- "\ \\(.{2,4}\\)"
-uniWS <- read.csv('unipept_results/737WS-mpa_result.csv',
-                stringsAsFactors = FALSE) %>%
-    select(peptide,
-           #uni_go_bp = GO..biological.process.,
-           uni_go_mf = GO..molecular.function.
-           #uni_go_cc = GO..cellular.component.
-           ) %>%
-    #filter(peptide %in% fivepep) %>%
-    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
-           uni_go_mf = sapply(uni_go_mf, function( x ) { 
-             terms <- strsplit(x, ';')[[1]];
-             terms <- sapply(terms, function ( x ) {
-              coverage <- str_extract(x, "\\d+%\\)");
-              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
-                str_extract(x, "GO:\\d+")
-              } else{
-                ""
-              }
-             })
-             paste(terms[terms != ""], collapse=";") }), 
-           )
-uniWS$uni_go_names <- sapply(strsplit(uniWS$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
-
-uniNS <- read.csv('unipept_results/737NS-mpa_result.csv',
-                stringsAsFactors = FALSE) %>%
-    select(peptide,
-           #uni_go_bp = GO..biological.process.,
-           uni_go_mf = GO..molecular.function.
-           #uni_go_cc = GO..cellular.component.
-           ) %>%
-    #filter(peptide %in% fivepep) %>%
-    mutate(#uni_go_bp = str_replace_all(string = uni_go_bp, pattern = cov_pat, replacement = ""),
-           uni_go_mf = sapply(uni_go_mf, function( x ) { 
-             terms <- strsplit(x, ';')[[1]];
-             terms <- sapply(terms, function ( x ) {
-              coverage <- str_extract(x, "\\d+%\\)");
-              if (as.numeric(gsub("%\\)", "", coverage)) >= 5){
-                str_extract(x, "GO:\\d+")
-              } else{
-                ""
-              }
-             })
-             paste(terms[terms != ""], collapse=";") }), 
-           )
-uniNS$uni_go_names <- sapply(strsplit(uniNS$uni_go_mf, ";"), function ( x ) { paste(Term(x), collapse="; ")})
-uniWS
-uniNS
-```
-```{r}
-#sort(unique(uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]$peptide))
-#sort(unique(uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]$peptide))
-peptides <- sort(unique(c(uniWS[grepl("peptide deformylase activity", uniWS$uni_go_names),]$peptide,
-      uniNS[grepl("peptide deformylase activity", uniNS$uni_go_names),]$peptide)))
-write.table(peptides, file='unipept_results/unipeptides.tab', quote=FALSE,
-            row.names=FALSE, col.names=FALSE)
+twenty_peps <- read.table('data/acetyl-CoA_C-acetyltransferase_activity_twenty_peps.tabular',
+                          stringsAsFactors=FALSE)[,1]
+twenty_peps
 ```
 
 ```{r}
@@ -144,6 +89,7 @@ filter_go_mf <- function(go_list){
 
 unipept_pep <- read.delim('data/unipept/737all-unipept-pept2go.tabular') %>%
   filter(str_detect(go_terms, go_target)) %>%
+  rename(peptide = X.peptide) %>%
   mutate(go_coverage = add_coverage(go_terms, go_protein_counts, total_protein_count),
          filtered_gos = filter_coverages(go_coverage),
          go_mf_filtered = sapply(filtered_gos, function(go_list){
@@ -151,7 +97,8 @@ unipept_pep <- read.delim('data/unipept/737all-unipept-pept2go.tabular') %>%
          }))
 
 uni <- unipept_pep %>%
-  filter(str_detect(go_mf_filtered, go_target))
+  filter(peptide %in% twenty_peps)
+uni <- uni[!duplicated(uni[c(1,3)]),] # remove duplicates
 # unipept_hits_unfiltered <- as.character(unipept_pep_refiltered$go_terms)
 # unipept_hits_unfiltered <- unique(unlist(strsplit(unipept_hits_unfiltered, ',')))
 uni
@@ -318,7 +265,7 @@ sum(blast_deformyl_ns$countNS)
 * Download results individually, combine into table
 
 ```{r}
-metagomics <- data.table(read.delim("data/metagomics/go_report_656.txt", comment.char = "#") %>%
+metagomics <- data.table(read.delim("data/metagomics/go_report_624_625.txt", comment.char = "#") %>%
   select(peptides,
          go = GO.acc,
          namespace = GO.aspect,
