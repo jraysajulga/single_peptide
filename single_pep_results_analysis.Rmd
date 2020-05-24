@@ -318,6 +318,24 @@ sum(blast_deformyl_ns$countNS)
 * Download results individually, combine into table
 
 ```{r}
+metagomics <- data.table(read.delim("data/metagomics/go_report_656.txt", comment.char = "#") %>%
+  select(peptides,
+         go = GO.acc,
+         namespace = GO.aspect,
+         name = GO.name))
+
+# Split peptides into individual rows
+metagomics <- metagomics[ , list( peptides = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
+                          by = list(go, namespace, name) ]
+metagomics <- metagomics %>%
+  group_by(peptides) %>%
+  summarise(gos = paste0(go, collapse=","))
+
+metagomics
+```
+
+
+```{r}
 library(GO.db)
 mg_go <- rep(0, length(peptides))
 dir <- 'metaGOmics_single_peptides_outputs/'
