@@ -106,9 +106,11 @@ uni
 # Term(setdiff(unipept_hits_unfiltered, unipept_hits))
 ```
 ```{r}
-uni <- read.delim('data/unipept/Galaxy14-[Unipept_pept2go_on_data_11_tsv].tabular') %>%
-  select(peptide = X.peptide,
-         uni_go_mf = go_terms )
+uni <- read.delim('data/unipept/Galaxy16-[Unipept_pept2go_on_data_11_GO_tsv].tabular') %>%
+  filter(Protein.Count / Total.Protein.Count > 0.05) %>%
+  select(peptide = Peptide, uni_go_mf = GO.Term) %>%
+  group_by(peptide) %>%
+  summarize(uni_go_mf = paste(uni_go_mf, collapse='; '))
 uni
 ```
 
@@ -432,7 +434,7 @@ for (n in 1:nrow(all_results)){
   print(get_go_names(blast))
   print("")
   
-  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ",", simplify=TRUE)))
+  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], "; ", simplify=TRUE)))
   uni <- uni[uni != ""]
   print("unipept terms:")
   print(uni)
@@ -547,7 +549,7 @@ for (n in 1:nrow(all_results)){
 
 ```{r}
 #row <- all_results[all_results$peptide == "IVGAKGKAALLR",]
-row <- all_results[all_results$peptide == "AGEADLVIAGGTESMSGAGFILPGTVR",]
+row <- all_results[all_results$peptide == "KGDITFDTDEYPNR",]
 get_names <- function(go_list, sep="; "){
   Term(strsplit(as.character(go_list), sep)[[1]])
 }
