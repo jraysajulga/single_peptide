@@ -546,6 +546,17 @@ for (n in 1:nrow(all_results)){
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
+```{r}
+grouped_results <- all_results %>% group_by(blast_go, mg_go, uni_go_mf, em_go) %>% 
+  summarise(ncounts = n(), 
+            peptides = paste(peptide, collapse=",")) %>%
+  arrange(desc(ncounts))
+grouped_results
+```
+```{r}
+grouped_results
+```
+
 
 ```{r}
 #row <- all_results[all_results$peptide == "IVGAKGKAALLR",]
