@@ -97,7 +97,7 @@ unipept_pep <- read.delim('data/unipept/737all-unipept-pept2go.tabular') %>%
          }))
 
 uni <- unipept_pep %>%
-  select(peptide, uni_go_mf = go_mf_filtered) %>%
+  select(peptide, uni_go_mf = go_terms) %>%
   filter(peptide %in% twenty_peps)
 uni <- uni[!duplicated(uni[c(1,2)]),] # remove duplicates
 # unipept_hits_unfiltered <- as.character(unipept_pep_refiltered$go_terms)
@@ -267,24 +267,28 @@ sum(blast_deformyl_ns$countNS)
 
 ```{r}
 twenty_peps_regex <-  paste(paste0('(',twenty_peps,')'), collapse='|')
-                            
-metagomics <- data.table(read.delim("data/metagomics/go_compare_624_625.txt", 
+
+metagomics <- data.table(read.delim("data/metagomics/go_compare_624_625.txt",
                          comment.char = "#") %>%
                            mutate(peptides = gsub(',$', '',
                                                   paste(Run.1.peptides,
                                                         Run.2.peptides, sep=","))) %>%
                          select(go = GO.acc, namespace = GO.aspect, name = GO.name,
-                                peptides) %>% 
+                                peptides) %>%
   filter(grepl(twenty_peps_regex, peptides)))
 metagomics
-# 
+
 # Split peptides into individual rows
 mg <- metagomics[ , list( peptide = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
                           by = list(go, namespace, name) ]
 mg <- mg %>%
   group_by(peptide) %>%
-  summarise(mg_go = paste0(go, collapse="; ")) %>%
-  filter(peptide %in% twenty_peps)
+  summarise(mg_go = paste(go, collapse="; ")) %>%
+  filter(peptide %in% twenty_peps) %>%
+  mutate(mg_go = sapply(mg_go, function ( go_list ) {
+    go_list <- filterOntology(str_split(go_list, "; ")[[1]], ontology)
+    paste(go_list, collapse="; ")
+  }))
 mg
 ```
 
@@ -532,6 +536,33 @@ for (n in 1:nrow(all_results)){
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
+
+```{r}
+#row <- all_results[all_results$peptide == "IVGAKGKAALLR",]
+row <- all_results[all_results$peptide == "AGEADLVIAGGTESMSGAGFILPGTVR",]
+get_names <- function(go_list, sep="; "){
+  Term(strsplit(as.character(go_list), sep)[[1]])
+}
+format_amigo <- function(go_list, sep='; '){
+  paste(strsplit(as.character(go_list), sep)[[1]], collapse=' ')
+}
+get_names(row$blast_go)
+format_amigo(row$blast_go)
+```
+```{r}
+get_names(row$em_go)
+```
+
+```{r}
+format_amigo(row$mg_go)
+get_names(row$mg_go)
+```
+
+```{r}
+get_names(row$uni_go_mf, sep=",")
+```
+
+
 ```{r}
 length(closely_related)
 #!grepl("GO:\\d{7}",closely_related)
@@ -577,16 +608,6 @@ length(eggnog_list)
 # DIAMQIAAVNPTYLNREEVPTEVIEHEK
 # head(get_go_names('GO:0005618'))
 # head(get_go_names('GO:0030312'))
-```
-
-
-```{r}
-#row <- all_results[all_results$peptide == "IVGAKGKAALLR",]
-row <- all_results[all_results$peptide == "IFVCDDGNGVVR",]
-row$blast_names
-row$em_names
-row$mg_names
-row$uni_go_names
 ```
 
 
