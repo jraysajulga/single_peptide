@@ -93,18 +93,18 @@ unipept_pep <- read.delim('data/unipept/737all-unipept-pept2go.tabular') %>%
   mutate(go_coverage = add_coverage(go_terms, go_protein_counts, total_protein_count),
          filtered_gos = filter_coverages(go_coverage),
          go_mf_filtered = sapply(filtered_gos, function(go_list){
-           paste(filter_go_mf(go_list), collapse=',')
+           paste(filter_go_mf(go_list), collapse='; ')
          }))
 
 uni <- unipept_pep %>%
+  select(peptide, uni_go_mf = go_mf_filtered) %>%
   filter(peptide %in% twenty_peps)
-uni <- uni[!duplicated(uni[c(1,3)]),] # remove duplicates
+uni <- uni[!duplicated(uni[c(1,2)]),] # remove duplicates
 # unipept_hits_unfiltered <- as.character(unipept_pep_refiltered$go_terms)
 # unipept_hits_unfiltered <- unique(unlist(strsplit(unipept_hits_unfiltered, ',')))
 uni
 # Term(setdiff(unipept_hits_unfiltered, unipept_hits))
 ```
-
 
 <!-- Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts -->
 <!-- ```{r} -->
@@ -283,33 +283,11 @@ mg <- metagomics[ , list( peptide = unlist( strsplit( as.character(peptides) , '
                           by = list(go, namespace, name) ]
 mg <- mg %>%
   group_by(peptide) %>%
-  summarise(gos = paste0(go, collapse=",")) %>%
+  summarise(mg_go = paste0(go, collapse="; ")) %>%
   filter(peptide %in% twenty_peps)
 mg
 ```
 
-```{r}
-library(GO.db)
-mg_go <- rep(0, length(peptides))
-dir <- 'metaGOmics_single_peptides_outputs/'
-files <- list.files(dir)
-for (i in 1:length(peptides)){
-  result <- read.delim(paste(dir, paste(peptides[i], '.txt', sep=""), sep=""),
-                       stringsAsFactors = FALSE,
-                       na.strings = c("", "NA", "NaN"),
-                       comment.char = "#")
-  if (length(result$GO.acc) > 0){
-    gos <- filterOntology(result$GO.acc, ontology)
-    gos <- gos[gos != ""]
-  } else {
-    gos <- ""
-  }
-  mg_go[i] <- paste(gos, collapse = "; ")
-}
-mg <- data.frame(peptide = peptides, mg_go, stringsAsFactors = FALSE)
-mg$mg_names <- sapply(strsplit(mg$mg_go, "; "), function ( x ) { paste(Term(x), collapse="; ")})
-mg
-```
 Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts
 ```{r}
 metagomics <- read.delim("metaGOmics_results/go_compare_149_150.txt",
@@ -442,7 +420,7 @@ for (n in 1:nrow(all_results)){
   print(get_go_names(blast))
   print("")
   
-  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ";", simplify=TRUE)))
+  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], "; ", simplify=TRUE)))
   uni <- uni[uni != ""]
   print("unipept terms:")
   print(uni)
@@ -550,7 +528,7 @@ for (n in 1:nrow(all_results)){
           axis.text.x = element_text(size=8, angle = 90, hjust = 0.95, vjust = 0.2),
           axis.title.x = element_text(margin = margin(t = 10, r = 0, b = 0, l = 0)))
   print(plot)
-  ggsave(paste("plots/peptide_deformylase/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
+  ggsave(paste("plots/", target_name, "/", all_results[n, 'peptide'], ".png", sep=""), plot = plot, width = 4, height = 4, dpi = 800, units = "in")
 }
 #pander::pander(output, split.cell = 10, split.table = Inf)
 ``` 
