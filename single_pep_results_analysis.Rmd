@@ -105,6 +105,14 @@ uni <- uni[!duplicated(uni[c(1,2)]),] # remove duplicates
 uni
 # Term(setdiff(unipept_hits_unfiltered, unipept_hits))
 ```
+```{r}
+uni <- read.delim('data/unipept/Galaxy14-[Unipept_pept2go_on_data_11_tsv].tabular') %>%
+  select(peptide = X.peptide,
+         uni_go_mf = go_terms )
+uni
+```
+
+
 
 <!-- Get the number of peptides (non-unique) at a peptide deformylase activity and spectral counts -->
 <!-- ```{r} -->
@@ -424,7 +432,7 @@ for (n in 1:nrow(all_results)){
   print(get_go_names(blast))
   print("")
   
-  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], "; ", simplify=TRUE)))
+  uni <- unique(c(str_split(all_results[n, 'uni_go_mf'], ",", simplify=TRUE)))
   uni <- uni[uni != ""]
   print("unipept terms:")
   print(uni)
@@ -550,6 +558,9 @@ get_names(row$blast_go)
 format_amigo(row$blast_go)
 ```
 ```{r}
+get_names(row$uni_go_mf, sep=",")
+```
+```{r}
 get_names(row$em_go)
 ```
 
@@ -558,9 +569,7 @@ format_amigo(row$mg_go)
 get_names(row$mg_go)
 ```
 
-```{r}
-get_names(row$uni_go_mf, sep=",")
-```
+
 
 
 ```{r}
