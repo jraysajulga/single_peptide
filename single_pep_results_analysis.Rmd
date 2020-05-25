@@ -193,10 +193,11 @@ process_gos <- function(go_col){
   })
 }
 
-blast <- read.delim('data/blast2go_outputs/uni_glucosyl_peps.txt') %>%
+blast <- read.delim('data/blast2go_outputs/acetyl-CoA_C-acetyltransferase_activity_twenty_peps.txt') %>%
   select(peptide = SeqName,
          blast_go = GO.IDs) %>%
-  mutate(blast_go = process_gos(blast_go))
+  mutate(blast_go = process_gos(blast_go)) %>%
+  filter(peptide %in% twenty_peps)
 blast <- blast[blast$blast_go != "",]
 blast
 ```
@@ -278,12 +279,12 @@ metagomics <- data.table(read.delim("data/metagomics/go_compare_624_625.txt",
 metagomics
 # 
 # Split peptides into individual rows
-mg <- metagomics[ , list( peptides = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
+mg <- metagomics[ , list( peptide = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
                           by = list(go, namespace, name) ]
 mg <- mg %>%
-  group_by(peptides) %>%
+  group_by(peptide) %>%
   summarise(gos = paste0(go, collapse=",")) %>%
-  filter(peptides %in% twenty_peps)
+  filter(peptide %in% twenty_peps)
 mg
 ```
 
