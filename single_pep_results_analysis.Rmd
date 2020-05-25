@@ -27,8 +27,8 @@ library(stringr)
 The single peptide analysis methods and results are contained in this document. 
 
 ### 20 Random peptides for Acetyl-CoA C-acetyltransferase activity
-
 ```{r}
+go_target <- "GO:0003985" # acetyl-CoA C-acetyltransferase activity
 twenty_peps <- read.table('data/acetyl-CoA_C-acetyltransferase_activity_twenty_peps.tabular',
                           stringsAsFactors=FALSE)[,1]
 twenty_peps
@@ -148,7 +148,7 @@ eggnog <- read.delim("eggnog_results/diamond_annotations.tabular",
                      stringsAsFactors = FALSE,
                      header = FALSE) %>% 
     select(peptide = V1, protein = V2, gene = V5, go = V6, ko = V7, desc = V13) %>%
-    filter(peptide %in% peptides)
+    filter(peptide %in% twenty_peps)
 #eggnog
 eggnog_w_counts <- left_join(eggnog,
                              peptides_all,
@@ -265,22 +265,27 @@ sum(blast_deformyl_ns$countNS)
 * Download results individually, combine into table
 
 ```{r}
-metagomics <- data.table(read.delim("data/metagomics/go_report_624_625.txt", comment.char = "#") %>%
-  select(peptides,
-         go = GO.acc,
-         namespace = GO.aspect,
-         name = GO.name))
-
-# Split peptides into individual rows
-metagomics <- metagomics[ , list( peptides = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
-                          by = list(go, namespace, name) ]
-metagomics <- metagomics %>%
-  group_by(peptides) %>%
-  summarise(gos = paste0(go, collapse=","))
-
+twenty_peps_regex <-  paste(paste0('(',twenty_peps,')'), collapse='|')
+                            
+metagomics <- data.table(read.delim("data/metagomics/go_compare_624_625.txt", 
+                         comment.char = "#") %>%
+                           mutate(peptides = gsub(',$', '',
+                                                  paste(Run.1.peptides,
+                                                        Run.2.peptides, sep=","))) %>%
+                         select(go = GO.acc, namespace = GO.aspect, name = GO.name,
+                                peptides) %>% 
+  filter(grepl(twenty_peps_regex, peptides)))
 metagomics
+# 
+# Split peptides into individual rows
+mg <- metagomics[ , list( peptides = unlist( strsplit( as.character(peptides) , ',' ) ) ) ,
+                          by = list(go, namespace, name) ]
+mg <- mg %>%
+  group_by(peptides) %>%
+  summarise(gos = paste0(go, collapse=",")) %>%
+  filter(peptides %in% twenty_peps)
+mg
 ```
-
 
 ```{r}
 library(GO.db)
